@@ -3,246 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SF2525 - Brownian Motion Simulations</title>
+    <title>Lecture Slides</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>SF2525 - Applied Mathematics: Stochastic Processes</h1>
-            <p>Interactive Brownian Motion Simulations for Each Lecture</p>
+            <h1>Course Lectures</h1>
         </header>
 
-        <div class="tabs">
-            <div class="tab-buttons">
-                <button class="tab-button active" onclick="openTab(event, 'lecture1')">Lecture 1</button>
-                <button class="tab-button" onclick="openTab(event, 'lecture2')">Lecture 2</button>
-                <button class="tab-button" onclick="openTab(event, 'lecture3')">Lecture 3</button>
-                <button class="tab-button" onclick="openTab(event, 'lecture4')">Lecture 4</button>
-                <button class="tab-button" onclick="openTab(event, 'lecture5')">Lecture 5</button>
-                <button class="tab-button" onclick="openTab(event, 'lecture6')">Lecture 6</button>
-                <button class="tab-button" onclick="openTab(event, 'lecture7')">Lecture 7</button>
-                <button class="tab-button" onclick="openTab(event, 'lecture8')">Lecture 8</button>
-                <button class="tab-button" onclick="openTab(event, 'lecture9')">Lecture 9</button>
-                <button class="tab-button" onclick="openTab(event, 'lecture10')">Lecture 10</button>
-                <button class="tab-button" onclick="openTab(event, 'lecture11')">Lecture 11</button>
-                <button class="tab-button" onclick="openTab(event, 'lecture12')">Lecture 12</button>
-                <button class="tab-button" onclick="openTab(event, 'lecture13')">Lecture 13</button>
-                <button class="tab-button" onclick="openTab(event, 'lecture14')">Lecture 14</button>
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+            <div class="tabs">
+                <button class="tab-button active" data-lecture="1">Lecture 1</button>
+                <button class="tab-button" data-lecture="2">Lecture 2</button>
+                <button class="tab-button" data-lecture="3">Lecture 3</button>
             </div>
+        </div>
 
+        <!-- Lecture Content -->
+        <div class="lecture-content">
             <!-- Lecture 1 -->
-            <div id="lecture1" class="tab-content active">
-                <h2>Lecture 1: Basic Brownian Motion</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas1" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(1)">Start</button>
-                        <button onclick="stopSimulation(1)">Stop</button>
-                        <button onclick="resetSimulation(1)">Reset</button>
-                        <label>Particles: <input type="range" id="particles1" min="1" max="50" value="10" onchange="updateParticles(1)"></label>
-                        <span id="particleCount1">10</span>
+            <div class="lecture active" id="lecture-1">
+                <div class="slideshow-container">
+                    <div class="slide active">
+                        <div class="slide-content">
+                            <div class="slide-counter">
+                                <span class="current-slide">1</span> / <span class="total-slides">3</span>
+                            </div>
+                            <h2>One-Dimensional Random Walk Simulation</h2>
+                            <p>Watch as a particle performs a random walk, with the view automatically zooming out as time progresses.</p>
+                            
+                            <div class="simulation-container">
+                                <div class="simulation-controls">
+                                    <div class="info-item">
+                                        <span class="info-label">Time:</span>
+                                        <span id="timeDisplay">0</span>
+                                    </div>
+                                    <button id="startBtn" class="sim-btn start-btn">Start</button>
+                                    <button id="stopBtn" class="sim-btn stop-btn" disabled>Stop</button>
+                                    <button id="resetBtn" class="sim-btn reset-btn">Reset</button>
+                                    <button id="speedBtn" class="sim-btn speed-btn">2x Speed</button>
+                                    <div class="info-item">
+                                        <span class="info-label">Speed:</span>
+                                        <span id="speedDisplay">1x</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="simulation-info">
+                                    <div class="info-item">
+                                        <span class="info-label">Time:</span>
+                                        <span id="timeDisplay">0</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Step Size:</span>
+                                        <span id="stepSizeDisplay">1.0</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Speed:</span>
+                                        <span id="speedDisplay">1x</span>
+                                    </div>
+                                </div>
+                                
+                                <canvas id="randomWalkCanvas" width="800" height="450"></canvas>
+                                
+                                <div class="simulation-description">
+                                    <p><strong>How it works:</strong> The particle moves up (+1) or down (-1) randomly at each time step. The display height grows as √t to show the characteristic scaling of random walks.</p>
+                                    <p><strong>Speed Control:</strong> Use the "2x Speed" button to double the simulation speed at any time.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="slide-counter">
+                                <span class="current-slide">1</span> / <span class="total-slides">3</span>
+                            </div>
+                            <h2>Discrete vs Continuous Random Walk</h2>
+                            <p>Compare discrete random walk (blue) with continuous normal steps (green) - both converge to Brownian motion.</p>
+                            
+                            <div class="simulation-container">
+                                <div class="simulation-controls">
+                                    <div class="info-item">
+                                        <span class="info-label">Time:</span>
+                                        <span id="timeDisplay2">0</span>
+                                    </div>
+                                    <button id="startBtn2" class="sim-btn start-btn">Start</button>
+                                    <button id="stopBtn2" class="sim-btn stop-btn" disabled>Stop</button>
+                                    <button id="resetBtn2" class="sim-btn reset-btn">Reset</button>
+                                    <button id="speedBtn2" class="sim-btn speed-btn">2x Speed</button>
+                                    <div class="info-item">
+                                        <span class="info-label">Speed:</span>
+                                        <span id="speedDisplay2">1x</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="simulation-info">
+                                    <div class="info-item">
+                                        <span class="info-label">Time:</span>
+                                        <span id="timeDisplay2">0</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Step Size:</span>
+                                        <span id="stepSizeDisplay2">1.0</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Speed:</span>
+                                        <span id="speedDisplay2">1x</span>
+                                    </div>
+                                </div>
+                                
+                                <canvas id="randomWalkCanvas2" width="800" height="450"></canvas>
+                                
+                                <div class="simulation-description">
+                                    <p><strong>Blue path:</strong> Discrete random walk (+1 or -1 steps). <strong>Green path:</strong> Continuous normal random steps.</p>
+                                    <p><strong>Speed Control:</strong> Use the "2x Speed" button to double the simulation speed for both trajectories.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="slide-counter">
+                                <span class="current-slide">1</span> / <span class="total-slides">3</span>
+                            </div>
+                            <h2>Lecture 1 - Slide 3</h2>
+                            <p>Final slide of lecture 1.</p>
+                            <blockquote>
+                                "Knowledge is power" - Francis Bacon
+                            </blockquote>
+                        </div>
+                    </div>
+                    
+                    <button class="slide-arrow slide-arrow-left" onclick="changeSlide(-1, 1)">
+                        <span class="arrow-icon">‹</span>
+                    </button>
+                    
+                    <button class="slide-arrow slide-arrow-right" onclick="changeSlide(1, 1)">
+                        <span class="arrow-icon">›</span>
+                    </button>
                 </div>
             </div>
 
             <!-- Lecture 2 -->
-            <div id="lecture2" class="tab-content">
-                <h2>Lecture 2: Brownian Motion with Drift</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas2" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(2)">Start</button>
-                        <button onclick="stopSimulation(2)">Stop</button>
-                        <button onclick="resetSimulation(2)">Reset</button>
-                        <label>Drift: <input type="range" id="drift2" min="-2" max="2" step="0.1" value="0.5" onchange="updateDrift(2)"></label>
-                        <span id="driftValue2">0.5</span>
+            <div class="lecture" id="lecture-2">
+                <div class="slideshow-container">
+                    <div class="slide active">
+                        <div class="slide-content">
+                            <h2>Lecture 2 - Slide 1</h2>
+                            <p>Welcome to the second lecture!</p>
+                            <ul>
+                                <li>Building on previous concepts</li>
+                                <li>New topics to explore</li>
+                                <li>Practical applications</li>
+                            </ul>
+                        </div>
                     </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2>Lecture 2 - Slide 2</h2>
+                            <p>Deep dive into the subject matter.</p>
+                            <div class="slide-image-placeholder">
+                                <p>Diagram placeholder</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2>Lecture 2 - Slide 3</h2>
+                            <p>Examples and case studies.</p>
+                            <div class="highlight-box">
+                                <p>Important concept to remember</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2>Lecture 2 - Slide 4</h2>
+                            <p>Conclusion of lecture 2.</p>
+                            <p>Next time we'll cover even more advanced topics.</p>
+                        </div>
+                    </div>
+                    
+                    <button class="slide-arrow slide-arrow-left" onclick="changeSlide(-1, 2)">
+                        <span class="arrow-icon">‹</span>
+                    </button>
+                    
+                    <button class="slide-arrow slide-arrow-right" onclick="changeSlide(1, 2)">
+                        <span class="arrow-icon">›</span>
+                    </button>
                 </div>
             </div>
 
             <!-- Lecture 3 -->
-            <div id="lecture3" class="tab-content">
-                <h2>Lecture 3: 2D Brownian Motion</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas3" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(3)">Start</button>
-                        <button onclick="stopSimulation(3)">Stop</button>
-                        <button onclick="resetSimulation(3)">Reset</button>
-                        <label>Speed: <input type="range" id="speed3" min="0.1" max="3" step="0.1" value="1" onchange="updateSpeed(3)"></label>
-                        <span id="speedValue3">1</span>
+            <div class="lecture" id="lecture-3">
+                <div class="slideshow-container">
+                    <div class="slide active">
+                        <div class="slide-content">
+                            <h2>Lecture 3 - Slide 1</h2>
+                            <p>Final lecture of our series!</p>
+                            <ul>
+                                <li>Review of key concepts</li>
+                                <li>Advanced applications</li>
+                                <li>Future directions</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Lecture 4 -->
-            <div id="lecture4" class="tab-content">
-                <h2>Lecture 4: Geometric Brownian Motion</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas4" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(4)">Start</button>
-                        <button onclick="stopSimulation(4)">Stop</button>
-                        <button onclick="resetSimulation(4)">Reset</button>
-                        <label>Volatility: <input type="range" id="volatility4" min="0.1" max="2" step="0.1" value="0.3" onchange="updateVolatility(4)"></label>
-                        <span id="volatilityValue4">0.3</span>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2>Lecture 3 - Slide 2</h2>
+                            <p>Advanced concepts and techniques.</p>
+                            <div class="slide-image-placeholder">
+                                <p>Advanced diagram placeholder</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Lecture 5 -->
-            <div id="lecture5" class="tab-content">
-                <h2>Lecture 5: Ornstein-Uhlenbeck Process</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas5" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(5)">Start</button>
-                        <button onclick="stopSimulation(5)">Stop</button>
-                        <button onclick="resetSimulation(5)">Reset</button>
-                        <label>Mean Reversion: <input type="range" id="reversion5" min="0.1" max="2" step="0.1" value="0.5" onchange="updateReversion(5)"></label>
-                        <span id="reversionValue5">0.5</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lecture 6 -->
-            <div id="lecture6" class="tab-content">
-                <h2>Lecture 6: Fractional Brownian Motion</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas6" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(6)">Start</button>
-                        <button onclick="stopSimulation(6)">Stop</button>
-                        <button onclick="resetSimulation(6)">Reset</button>
-                        <label>Hurst: <input type="range" id="hurst6" min="0.1" max="0.9" step="0.1" value="0.5" onchange="updateHurst(6)"></label>
-                        <span id="hurstValue6">0.5</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lecture 7 -->
-            <div id="lecture7" class="tab-content">
-                <h2>Lecture 7: Bridge Processes</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas7" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(7)">Start</button>
-                        <button onclick="stopSimulation(7)">Stop</button>
-                        <button onclick="resetSimulation(7)">Reset</button>
-                        <label>Bridge End: <input type="range" id="bridgeEnd7" min="-200" max="200" value="0" onchange="updateBridgeEnd(7)"></label>
-                        <span id="bridgeEndValue7">0</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lecture 8 -->
-            <div id="lecture8" class="tab-content">
-                <h2>Lecture 8: Jump Diffusion Process</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas8" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(8)">Start</button>
-                        <button onclick="stopSimulation(8)">Stop</button>
-                        <button onclick="resetSimulation(8)">Reset</button>
-                        <label>Jump Rate: <input type="range" id="jumpRate8" min="0.01" max="0.2" step="0.01" value="0.05" onchange="updateJumpRate(8)"></label>
-                        <span id="jumpRateValue8">0.05</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lecture 9 -->
-            <div id="lecture9" class="tab-content">
-                <h2>Lecture 9: Multi-dimensional Brownian Motion</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas9" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(9)">Start</button>
-                        <button onclick="stopSimulation(9)">Stop</button>
-                        <button onclick="resetSimulation(9)">Reset</button>
-                        <label>Correlation: <input type="range" id="correlation9" min="-0.9" max="0.9" step="0.1" value="0" onchange="updateCorrelation(9)"></label>
-                        <span id="correlationValue9">0</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lecture 10 -->
-            <div id="lecture10" class="tab-content">
-                <h2>Lecture 10: Reflecting Brownian Motion</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas10" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(10)">Start</button>
-                        <button onclick="stopSimulation(10)">Stop</button>
-                        <button onclick="resetSimulation(10)">Reset</button>
-                        <label>Barriers: <input type="checkbox" id="barriers10" onchange="toggleBarriers(10)"></label>
-                        <span>Show Barriers</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lecture 11 -->
-            <div id="lecture11" class="tab-content">
-                <h2>Lecture 11: Stopped Brownian Motion</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas11" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(11)">Start</button>
-                        <button onclick="stopSimulation(11)">Stop</button>
-                        <button onclick="resetSimulation(11)">Reset</button>
-                        <label>Stop Level: <input type="range" id="stopLevel11" min="50" max="300" value="150" onchange="updateStopLevel(11)"></label>
-                        <span id="stopLevelValue11">150</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lecture 12 -->
-            <div id="lecture12" class="tab-content">
-                <h2>Lecture 12: Brownian Motion with Boundaries</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas12" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(12)">Start</button>
-                        <button onclick="stopSimulation(12)">Stop</button>
-                        <button onclick="resetSimulation(12)">Reset</button>
-                        <label>Boundary Width: <input type="range" id="boundaryWidth12" min="100" max="300" value="200" onchange="updateBoundaryWidth(12)"></label>
-                        <span id="boundaryWidthValue12">200</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lecture 13 -->
-            <div id="lecture13" class="tab-content">
-                <h2>Lecture 13: Stochastic Differential Equations</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas13" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(13)">Start</button>
-                        <button onclick="stopSimulation(13)">Stop</button>
-                        <button onclick="resetSimulation(13)">Reset</button>
-                        <label>Noise Level: <input type="range" id="noise13" min="0.1" max="3" step="0.1" value="1" onchange="updateNoise(13)"></label>
-                        <span id="noiseValue13">1</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lecture 14 -->
-            <div id="lecture14" class="tab-content">
-                <h2>Lecture 14: Applications and Summary</h2>
-                <div class="simulation-container">
-                    <canvas id="canvas14" width="800" height="400"></canvas>
-                    <div class="controls">
-                        <button onclick="startSimulation(14)">Start</button>
-                        <button onclick="stopSimulation(14)">Stop</button>
-                        <button onclick="resetSimulation(14)">Reset</button>
-                        <label>Complexity: <input type="range" id="complexity14" min="1" max="5" value="3" onchange="updateComplexity(14)"></label>
-                        <span id="complexityValue14">3</span>
-                    </div>
+                    
+                    <button class="slide-arrow slide-arrow-left" onclick="changeSlide(-1, 3)">
+                        <span class="arrow-icon">‹</span>
+                    </button>
+                    
+                    <button class="slide-arrow slide-arrow-right" onclick="changeSlide(1, 3)">
+                        <span class="arrow-icon">›</span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="simulations.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
