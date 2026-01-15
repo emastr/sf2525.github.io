@@ -29,7 +29,74 @@
                     <div class="slide active">
                         <div class="slide-content">
                             <div class="slide-counter">
-                                <span class="current-slide">1</span> / <span class="total-slides">3</span>
+                                <span class="current-slide">1</span> / <span class="total-slides">4</span>
+                            </div>
+                            <h2>N-Particle Periodic Box Simulation</h2>
+                            <p>Watch multiple particles traverse a 2D periodic box in straight lines, wrapping around at boundaries.</p>
+                            
+                            <div class="simulation-container">
+                                <div class="simulation-controls">
+                                    <div class="info-item">
+                                        <span class="info-label">Time:</span>
+                                        <span id="timeDisplayParticles">0</span>
+                                    </div>
+                                    <button id="startBtnParticles" class="sim-btn start-btn">Start</button>
+                                    <button id="stopBtnParticles" class="sim-btn stop-btn" disabled>Stop</button>
+                                    <button id="resetBtnParticles" class="sim-btn reset-btn">Reset</button>
+                                    <button id="speedBtnParticles" class="sim-btn speed-btn">2x Speed</button>
+                                    <div class="info-item">
+                                        <span class="info-label">Speed:</span>
+                                        <span id="speedDisplayParticles">1x</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="simulation-controls">
+                                    <div class="info-item">
+                                        <span class="info-label">Particles:</span>
+                                        <span id="particleCountDisplay">32</span>
+                                    </div>
+                                    <button id="halfParticlesBtn" class="sim-btn">½ Particles</button>
+                                    <button id="doubleParticlesBtn" class="sim-btn">2× Particles</button>
+                                    <button id="hideParticlesBtn" class="sim-btn">Hide Particles</button>
+                                    <div class="info-item">
+                                        <span class="info-label">Box Size:</span>
+                                        <span id="boxSizeDisplay">400×300</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="simulation-controls">
+                                    <button id="resetHistogramBtn" class="sim-btn reset-btn">Reset Histogram</button>
+                                    <button id="hideHistogramBtn" class="sim-btn toggle-btn">Hide Histogram</button>
+                                    <div class="info-item">
+                                        <span class="info-label">Histogram Samples:</span>
+                                        <span id="histogramSampleCount">0</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="simulation-info">
+                                    <div class="info-item">
+                                        <span class="info-label">Time:</span>
+                                        <span id="timeDisplayParticles">0</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Speed:</span>
+                                        <span id="speedDisplayParticles">1x</span>
+                                    </div>
+                                </div>
+                                
+                                <canvas id="particleBoxCanvas" width="800" height="450"></canvas>
+                                
+                                <div class="simulation-description">
+                                    <p><strong>How it works:</strong> Each particle moves in a straight line with random initial direction and speed. When hitting a boundary, it wraps to the opposite side (periodic boundary conditions).</p>
+                                    <p><strong>Controls:</strong> Use "½ Particles" and "2× Particles" to adjust the number of particles. The simulation shows particle trails and current positions.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="slide-counter">
+                                <span class="current-slide">2</span> / <span class="total-slides">4</span>
                             </div>
                             <h2>One-Dimensional Random Walk Simulation</h2>
                             <p>Watch as a particle performs a random walk, with the view automatically zooming out as time progresses.</p>
@@ -77,7 +144,7 @@
                     <div class="slide">
                         <div class="slide-content">
                             <div class="slide-counter">
-                                <span class="current-slide">1</span> / <span class="total-slides">3</span>
+                                <span class="current-slide">3</span> / <span class="total-slides">4</span>
                             </div>
                             <h2>Discrete vs Continuous Random Walk</h2>
                             <p>Compare discrete random walk (blue) with continuous normal steps (green) - both converge to Brownian motion.</p>
@@ -125,9 +192,9 @@
                     <div class="slide">
                         <div class="slide-content">
                             <div class="slide-counter">
-                                <span class="current-slide">1</span> / <span class="total-slides">3</span>
+                                <span class="current-slide">4</span> / <span class="total-slides">4</span>
                             </div>
-                            <h2>Lecture 1 - Slide 3</h2>
+                            <h2>Lecture 1 - Slide 4</h2>
                             <p>Final slide of lecture 1.</p>
                             <blockquote>
                                 "Knowledge is power" - Francis Bacon
