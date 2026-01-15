@@ -235,6 +235,54 @@ blockquote {
     margin-top: 0px;
 }
 
+.slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.fullscreen-btn {
+    background: #2a2a2a;
+    border: 1px solid #404040;
+    color: #e0e0e0;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.fullscreen-btn:hover {
+    background: #404040;
+    border-color: #606060;
+}
+
+.fullscreen-btn:active {
+    background: #505050;
+}
+
+/* Fullscreen styles */
+.lecture-content:fullscreen {
+    background: #121212;
+    padding: 20px;
+}
+
+.lecture-content:-webkit-full-screen {
+    background: #121212;
+    padding: 20px;
+}
+
+.lecture-content:-moz-full-screen {
+    background: #121212;
+    padding: 20px;
+}
+
+.lecture-content:-ms-fullscreen {
+    background: #121212;
+    padding: 20px;
+}
+
 .current-slide {
     color: #ffffff;
     font-weight: 700;

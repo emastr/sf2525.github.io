@@ -12,6 +12,7 @@ let currentSlides = {
 document.addEventListener('DOMContentLoaded', function() {
     initializeTabs();
     initializeSlideshow();
+    initializeFullscreen();
     initializeSimulations(); // From simulations.js
 });
 
@@ -175,4 +176,124 @@ function handleSwipe() {
             changeSlide(-1, lectureNumber);
         }
     }
+}
+
+// Initialize fullscreen functionality
+function initializeFullscreen() {
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    
+    if (fullscreenBtn) {
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+    }
+    
+    // Listen for fullscreen changes to update button
+    document.addEventListener('fullscreenchange', updateFullscreenButton);
+    document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
+    document.addEventListener('mozfullscreenchange', updateFullscreenButton);
+    document.addEventListener('MSFullscreenChange', updateFullscreenButton);
+}
+
+// Toggle fullscreen mode
+function toggleFullscreen() {
+    const slideContainer = document.querySelector('.lecture-content');
+    
+    if (!document.fullscreenElement && 
+        !document.webkitFullscreenElement && 
+        !document.mozFullScreenElement && 
+        !document.msFullscreenElement) {
+        // Enter fullscreen
+        if (slideContainer.requestFullscreen) {
+            slideContainer.requestFullscreen();
+        } else if (slideContainer.webkitRequestFullscreen) {
+            slideContainer.webkitRequestFullscreen();
+        } else if (slideContainer.mozRequestFullScreen) {
+            slideContainer.mozRequestFullScreen();
+        } else if (slideContainer.msRequestFullscreen) {
+            slideContainer.msRequestFullscreen();
+        }
+    } else {
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
+
+// Update fullscreen button appearance
+function updateFullscreenButton() {
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    if (!fullscreenBtn) return;
+    
+    const isFullscreen = document.fullscreenElement || 
+                        document.webkitFullscreenElement || 
+                        document.mozFullScreenElement || 
+                        document.msFullscreenElement;
+    
+    fullscreenBtn.title = isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen';
+}
+
+// Initialize fullscreen functionality
+function initializeFullscreen() {
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    
+    if (fullscreenBtn) {
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+    }
+    
+    // Listen for fullscreen changes to update button
+    document.addEventListener('fullscreenchange', updateFullscreenButton);
+    document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
+    document.addEventListener('mozfullscreenchange', updateFullscreenButton);
+    document.addEventListener('MSFullscreenChange', updateFullscreenButton);
+}
+
+// Toggle fullscreen mode
+function toggleFullscreen() {
+    const slideContainer = document.querySelector('.lecture-content');
+    
+    if (!document.fullscreenElement && 
+        !document.webkitFullscreenElement && 
+        !document.mozFullScreenElement && 
+        !document.msFullscreenElement) {
+        // Enter fullscreen
+        if (slideContainer.requestFullscreen) {
+            slideContainer.requestFullscreen();
+        } else if (slideContainer.webkitRequestFullscreen) {
+            slideContainer.webkitRequestFullscreen();
+        } else if (slideContainer.mozRequestFullScreen) {
+            slideContainer.mozRequestFullScreen();
+        } else if (slideContainer.msRequestFullscreen) {
+            slideContainer.msRequestFullscreen();
+        }
+    } else {
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
+
+// Update fullscreen button appearance
+function updateFullscreenButton() {
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    if (!fullscreenBtn) return;
+    
+    const isFullscreen = document.fullscreenElement || 
+                        document.webkitFullscreenElement || 
+                        document.mozFullScreenElement || 
+                        document.msFullscreenElement;
+    
+    fullscreenBtn.title = isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen';
 }

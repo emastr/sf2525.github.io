@@ -340,7 +340,7 @@ class ParticleBoxSimulation {
         this.histogramData = []; // Total x-displacements over delta_t intervals
         this.histogramBins = 19;
         this.maxHistogramValue = 0;
-        this.particlesVisible = true; // Track whether small particles should be drawn
+        this.particlesVisible = false; // Track whether small particles should be drawn
         this.histogramVisible = true; // Track whether histogram should be drawn
         this.trailUpdateCounter = 0; // Counter for less frequent trail updates
         

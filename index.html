@@ -28,8 +28,11 @@
                 <div class="slideshow-container">
                     <div class="slide active">
                         <div class="slide-content">
-                            <div class="slide-counter">
-                                <span class="current-slide">1</span> / <span class="total-slides">4</span>
+                            <div class="slide-header">
+                                <div class="slide-counter">
+                                    <span class="current-slide">1</span> / <span class="total-slides">4</span>
+                                </div>
+                                <button id="fullscreenBtn" class="fullscreen-btn" title="Toggle Fullscreen">⛶</button>
                             </div>
                             <h2>N-Particle Periodic Box Simulation</h2>
                             <p>Watch multiple particles traverse a 2D periodic box in straight lines, wrapping around at boundaries.</p>
@@ -57,7 +60,7 @@
                                     </div>
                                     <button id="halfParticlesBtn" class="sim-btn">½ Particles</button>
                                     <button id="doubleParticlesBtn" class="sim-btn">2× Particles</button>
-                                    <button id="hideParticlesBtn" class="sim-btn">Hide Particles</button>
+                                    <button id="hideParticlesBtn" class="sim-btn">Show Particles</button>
                                     <div class="info-item">
                                         <span class="info-label">Box Size:</span>
                                         <span id="boxSizeDisplay">400×300</span>
