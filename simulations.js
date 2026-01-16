@@ -807,13 +807,31 @@ class ParticleBoxSimulation {
         ctx.fillStyle = '#1a1a1a';
         ctx.fillRect(0, 0, canvasWidth, canvasHeight);
         
-        // Calculate scaling and offset to position the box on the left
-        const scaleX = (canvasWidth * 0.6 - 20) / this.boxWidth; // Use 60% of canvas width
-        const scaleY = (canvasHeight - 40) / this.boxHeight;
-        const scale = Math.min(scaleX, scaleY);
+        // Calculate scaling and offset to position the box
+        // Check if we're in fullscreen mode by canvas size
+        const isFullscreen = canvasWidth > 1200 || canvasHeight > 600;
         
-        const offsetX = 20; // Left-aligned with minimal padding
-        const offsetY = (canvasHeight - this.boxHeight * scale) / 2;
+        let scaleX, scaleY, scale, offsetX, offsetY;
+        
+        if (isFullscreen) {
+            // In fullscreen: use full height with margins on sides
+            const margin = 40;
+            scaleY = (canvasHeight - margin * 2) / this.boxHeight;
+            scaleX = (canvasWidth - margin * 2) / this.boxWidth;
+            scale = Math.min(scaleX, scaleY);
+            
+            // Center the simulation box
+            offsetX = (canvasWidth - this.boxWidth * scale) / 2;
+            offsetY = (canvasHeight - this.boxHeight * scale) / 2;
+        } else {
+            // Normal mode: use 60% of canvas width, positioned left
+            scaleX = (canvasWidth * 0.6 - 20) / this.boxWidth;
+            scaleY = (canvasHeight - 40) / this.boxHeight;
+            scale = Math.min(scaleX, scaleY);
+            
+            offsetX = 20; // Left-aligned with minimal padding
+            offsetY = (canvasHeight - this.boxHeight * scale) / 2;
+        }
         
         // Draw box boundary
         ctx.strokeStyle = '#444444';
@@ -882,26 +900,35 @@ class ParticleBoxSimulation {
         
         // Draw histogram on the right side (conditionally)
         if (this.histogramVisible) {
-            this.drawHistogram(ctx, canvasWidth, canvasHeight);
+            this.drawHistogram(ctx, canvasWidth, canvasHeight, isFullscreen, offsetX, this.boxWidth * scale);
         }
     }
     
-    drawHistogram(ctx, canvasWidth, canvasHeight) {
+    drawHistogram(ctx, canvasWidth, canvasHeight, isFullscreen = false, simBoxOffsetX = 20, simBoxWidth = 0) {
         if (this.histogramData.length === 0) return;
         
-        // Calculate simulation box dimensions for alignment
-        const scaleX = (canvasWidth * 0.6 - 20) / this.boxWidth;
-        const scaleY = (canvasHeight - 40) / this.boxHeight;
-        const scale = Math.min(scaleX, scaleY);
-        const simBoxWidth = this.boxWidth * scale;
-        const simBoxHeight = this.boxHeight * scale;
-        const simBoxY = (canvasHeight - simBoxHeight) / 2;
+        // Calculate histogram dimensions and position
+        let histogramHeight, histogramWidth, histogramX, histogramY;
         
-        // Histogram dimensions - aligned to right of simulation box
-        const histogramHeight = simBoxHeight; // Match simulation box height
-        const histogramWidth = histogramHeight / 2; // Half the height
-        const histogramX = 20 + simBoxWidth + 60; // Right of simulation box with larger gap
-        const histogramY = simBoxY; // Same vertical alignment as simulation box
+        if (isFullscreen) {
+            // In fullscreen: position histogram to the right of centered simulation
+            histogramHeight = canvasHeight * 0.6; // 60% of screen height
+            histogramWidth = Math.min(300, (canvasWidth - simBoxOffsetX - simBoxWidth - 40) * 0.8);
+            histogramX = simBoxOffsetX + simBoxWidth + 40;
+            histogramY = (canvasHeight - histogramHeight) / 2;
+        } else {
+            // Normal mode: calculate as before
+            const scaleX = (canvasWidth * 0.6 - 20) / this.boxWidth;
+            const scaleY = (canvasHeight - 40) / this.boxHeight;
+            const scale = Math.min(scaleX, scaleY);
+            const simBoxHeight = this.boxHeight * scale;
+            const simBoxY = (canvasHeight - simBoxHeight) / 2;
+            
+            histogramHeight = simBoxHeight;
+            histogramWidth = histogramHeight / 2;
+            histogramX = 20 + (canvasWidth * 0.6 - 20) + 60;
+            histogramY = simBoxY;
+        }
         
         // Calculate bin data with fixed range
         const binCounts = new Array(this.histogramBins).fill(0);
