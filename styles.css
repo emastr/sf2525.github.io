@@ -265,22 +265,113 @@ blockquote {
 /* Fullscreen styles */
 .lecture-content:fullscreen {
     background: #121212;
-    padding: 20px;
+    padding: 0;
+    position: relative;
 }
 
 .lecture-content:-webkit-full-screen {
     background: #121212;
-    padding: 20px;
+    padding: 0;
+    position: relative;
 }
 
 .lecture-content:-moz-full-screen {
     background: #121212;
-    padding: 20px;
+    padding: 0;
+    position: relative;
 }
 
 .lecture-content:-ms-fullscreen {
     background: #121212;
-    padding: 20px;
+    padding: 0;
+    position: relative;
+}
+
+/* Hide elements in fullscreen */
+.lecture-content:fullscreen h2,
+.lecture-content:fullscreen p,
+.lecture-content:fullscreen .slide-nav,
+.lecture-content:fullscreen .slide-counter {
+    display: none;
+}
+
+.lecture-content:-webkit-full-screen h2,
+.lecture-content:-webkit-full-screen p,
+.lecture-content:-webkit-full-screen .slide-nav,
+.lecture-content:-webkit-full-screen .slide-counter {
+    display: none;
+}
+
+.lecture-content:-moz-full-screen h2,
+.lecture-content:-moz-full-screen p,
+.lecture-content:-moz-full-screen .slide-nav,
+.lecture-content:-moz-full-screen .slide-counter {
+    display: none;
+}
+
+.lecture-content:-ms-fullscreen h2,
+.lecture-content:-ms-fullscreen p,
+.lecture-content:-ms-fullscreen .slide-nav,
+.lecture-content:-ms-fullscreen .slide-counter {
+    display: none;
+}
+
+/* Position fullscreen button in top right corner when in fullscreen */
+.lecture-content:fullscreen .fullscreen-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background: rgba(42, 42, 42, 0.9);
+    backdrop-filter: blur(5px);
+}
+
+.lecture-content:-webkit-full-screen .fullscreen-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background: rgba(42, 42, 42, 0.9);
+    backdrop-filter: blur(5px);
+}
+
+.lecture-content:-moz-full-screen .fullscreen-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background: rgba(42, 42, 42, 0.9);
+    backdrop-filter: blur(5px);
+}
+
+.lecture-content:-ms-fullscreen .fullscreen-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background: rgba(42, 42, 42, 0.9);
+    backdrop-filter: blur(5px);
+}
+
+/* Expand simulation container in fullscreen */
+.lecture-content:fullscreen .simulation-container,
+.lecture-content:-webkit-full-screen .simulation-container,
+.lecture-content:-moz-full-screen .simulation-container,
+.lecture-content:-ms-fullscreen .simulation-container {
+    height: 100vh;
+    max-height: none;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make canvas take full height in fullscreen */
+.lecture-content:fullscreen #particleBoxCanvas,
+.lecture-content:-webkit-full-screen #particleBoxCanvas,
+.lecture-content:-moz-full-screen #particleBoxCanvas,
+.lecture-content:-ms-fullscreen #particleBoxCanvas {
+    height: calc(100vh - 120px) !important;
+    width: 100vw !important;
+    max-width: none !important;
 }
 
 .current-slide {

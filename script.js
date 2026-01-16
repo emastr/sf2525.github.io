@@ -236,6 +236,13 @@ function updateFullscreenButton() {
                         document.msFullscreenElement;
     
     fullscreenBtn.title = isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen';
+    
+    // Resize canvas if in fullscreen
+    if (isFullscreen) {
+        resizeCanvasForFullscreen();
+    } else {
+        restoreCanvasSize();
+    }
 }
 
 // Initialize fullscreen functionality
@@ -296,4 +303,31 @@ function updateFullscreenButton() {
                         document.msFullscreenElement;
     
     fullscreenBtn.title = isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen';
+}// Resize canvas for fullscreen mode
+function resizeCanvasForFullscreen() {
+    const canvas = document.getElementById('particleBoxCanvas');
+    if (canvas) {
+        // Store original dimensions
+        if (!canvas.originalWidth) {
+            canvas.originalWidth = canvas.width;
+            canvas.originalHeight = canvas.height;
+        }
+        
+        // Set fullscreen dimensions
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight - 120; // Leave space for controls
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = (window.innerHeight - 120) + 'px';
+    }
+}
+
+// Restore original canvas size
+function restoreCanvasSize() {
+    const canvas = document.getElementById('particleBoxCanvas');
+    if (canvas && canvas.originalWidth) {
+        canvas.width = canvas.originalWidth;
+        canvas.height = canvas.originalHeight;
+        canvas.style.width = canvas.originalWidth + 'px';
+        canvas.style.height = canvas.originalHeight + 'px';
+    }
 }
