@@ -7,20 +7,43 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
+    <!-- Fixed Header Bar -->
+    <div class="header-bar">
+        <button class="burger-menu" id="burgerMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <button class="fullscreen-btn" id="fullscreenBtn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M7 14H5v5h5v-2H7v-3zM5 10h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" fill="currentColor"/>
+            </svg>
+        </button>
+        <button class="slide-nav-btn slide-nav-left" id="slideNavLeft">
+            <span class="arrow-icon">‹</span>
+        </button>
+        <button class="slide-nav-btn slide-nav-right" id="slideNavRight">
+            <span class="arrow-icon">›</span>
+        </button>
+        <h2 class="slide-title" id="slideTitle">N-Particle Periodic Box Simulation</h2>
+    </div>
+    
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
             <h1>Course Lectures</h1>
-        </header>
-
-        <!-- Tab Navigation -->
-        <div class="tab-container">
-            <div class="tabs">
+            <div class="sidebar-tabs">
                 <button class="tab-button active" data-lecture="1">Lecture 1</button>
                 <button class="tab-button" data-lecture="2">Lecture 2</button>
                 <button class="tab-button" data-lecture="3">Lecture 3</button>
             </div>
         </div>
-
+    </div>
+    
+    <!-- Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <div class="container">
         <!-- Lecture Content -->
         <div class="lecture-content">
             <!-- Lecture 1 -->
@@ -28,73 +51,60 @@
                 <div class="slideshow-container">
                     <div class="slide active">
                         <div class="slide-content">
-                            <div class="slide-header">
-                                <div class="slide-counter">
-                                    <span class="current-slide">1</span> / <span class="total-slides">4</span>
-                                </div>
-                                <button id="fullscreenBtn" class="fullscreen-btn" title="Toggle Fullscreen">⛶</button>
+                            <div class="slide-counter">
+                                <span class="current-slide">1</span> / <span class="total-slides">4</span>
                             </div>
                             <h2>N-Particle Periodic Box Simulation</h2>
                             <p>Watch multiple particles traverse a 2D periodic box in straight lines, wrapping around at boundaries.</p>
                             
-                            <div class="simulation-container">
-                                <div class="simulation-controls">
-                                    <div class="info-item">
-                                        <span class="info-label">Time:</span>
-                                        <span id="timeDisplayParticles">0</span>
+                            <div class="simulation-layout">
+                                <canvas id="particleBoxCanvas" width="1800" height="1013"></canvas>
+                                <div class="simulation-controls-panel">
+                                    <div class="simulation-controls">
+                                        <div class="info-item">
+                                            <span class="info-label">Time:</span>
+                                            <span id="timeDisplayParticles">0</span>
+                                        </div>
+                                        <button id="startBtnParticles" class="sim-btn start-btn">Start</button>
+                                        <button id="stopBtnParticles" class="sim-btn stop-btn" disabled>Stop</button>
+                                        <button id="resetBtnParticles" class="sim-btn reset-btn">Reset</button>
+                                        <button id="speedBtnParticles" class="sim-btn speed-btn">2x Speed</button>
+                                        <div class="info-item">
+                                            <span class="info-label">Speed:</span>
+                                            <span id="speedDisplayParticles">1x</span>
+                                        </div>
                                     </div>
-                                    <button id="startBtnParticles" class="sim-btn start-btn">Start</button>
-                                    <button id="stopBtnParticles" class="sim-btn stop-btn" disabled>Stop</button>
-                                    <button id="resetBtnParticles" class="sim-btn reset-btn">Reset</button>
-                                    <button id="speedBtnParticles" class="sim-btn speed-btn">2x Speed</button>
-                                    <div class="info-item">
-                                        <span class="info-label">Speed:</span>
-                                        <span id="speedDisplayParticles">1x</span>
+                                    
+                                    <div class="simulation-controls">
+                                        <div class="info-item">
+                                            <span class="info-label">Particles:</span>
+                                            <span id="particleCountDisplay">32</span>
+                                        </div>
+                                        <button id="halfParticlesBtn" class="sim-btn">½ Particles</button>
+                                        <button id="doubleParticlesBtn" class="sim-btn">2× Particles</button>
+                                        <button id="hideParticlesBtn" class="sim-btn">Show Particles</button>
+                                        <div class="info-item">
+                                            <span class="info-label">Box Size:</span>
+                                            <span id="boxSizeDisplay">400×300</span>
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <div class="simulation-controls">
-                                    <div class="info-item">
-                                        <span class="info-label">Particles:</span>
-                                        <span id="particleCountDisplay">32</span>
+                                    
+                                    <div class="simulation-controls">
+                                        <button id="resetHistogramBtn" class="sim-btn reset-btn">Reset Histogram</button>
+                                        <button id="hideHistogramBtn" class="sim-btn toggle-btn">Hide Histogram</button>
+                                        <div class="info-item">
+                                            <span class="info-label">Histogram Samples:</span>
+                                            <span id="histogramSampleCount">0</span>
+                                        </div>
                                     </div>
-                                    <button id="halfParticlesBtn" class="sim-btn">½ Particles</button>
-                                    <button id="doubleParticlesBtn" class="sim-btn">2× Particles</button>
-                                    <button id="hideParticlesBtn" class="sim-btn">Show Particles</button>
-                                    <div class="info-item">
-                                        <span class="info-label">Box Size:</span>
-                                        <span id="boxSizeDisplay">400×300</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="simulation-controls">
-                                    <button id="resetHistogramBtn" class="sim-btn reset-btn">Reset Histogram</button>
-                                    <button id="hideHistogramBtn" class="sim-btn toggle-btn">Hide Histogram</button>
-                                    <div class="info-item">
-                                        <span class="info-label">Histogram Samples:</span>
-                                        <span id="histogramSampleCount">0</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="simulation-info">
-                                    <div class="info-item">
-                                        <span class="info-label">Time:</span>
-                                        <span id="timeDisplayParticles">0</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <span class="info-label">Speed:</span>
-                                        <span id="speedDisplayParticles">1x</span>
-                                    </div>
-                                </div>
-                                
-                                <canvas id="particleBoxCanvas" width="800" height="450"></canvas>
-                                
-                                <div class="simulation-description">
-                                    <p><strong>How it works:</strong> Each particle moves in a straight line with random initial direction and speed. When hitting a boundary, it wraps to the opposite side (periodic boundary conditions).</p>
-                                    <p><strong>Controls:</strong> Use "½ Particles" and "2× Particles" to adjust the number of particles. The simulation shows particle trails and current positions.</p>
                                 </div>
                             </div>
-                        </div>
+                            
+                            <div class="simulation-description">
+                                <p><strong>How it works:</strong> Each particle moves in a straight line with random initial direction and speed. When hitting a boundary, it wraps to the opposite side (periodic boundary conditions).</p>
+                                <p><strong>Controls:</strong> Use "½ Particles" and "2× Particles" to adjust the number of particles. The simulation shows particle trails and current positions.</p>
+                                </div>
+                            </div>
                     </div>
                     <div class="slide">
                         <div class="slide-content">
@@ -104,45 +114,39 @@
                             <h2>One-Dimensional Random Walk Simulation</h2>
                             <p>Watch as a particle performs a random walk, with the view automatically zooming out as time progresses.</p>
                             
-                            <div class="simulation-container">
-                                <div class="simulation-controls">
-                                    <div class="info-item">
-                                        <span class="info-label">Time:</span>
-                                        <span id="timeDisplay">0</span>
+                            <div class="simulation-layout">
+                                <canvas id="randomWalkCanvas" width="1800" height="1013"></canvas>
+                                <div class="simulation-controls-panel">
+                                    <div class="simulation-controls">
+                                        <div class="info-item">
+                                            <span class="info-label">Time:</span>
+                                            <span id="timeDisplay">0</span>
+                                        </div>
+                                        <div class="control-row">
+                                            <button id="startBtn" class="sim-btn start-btn">Start</button>
+                                            <button id="stopBtn" class="sim-btn stop-btn" disabled>Stop</button>
+                                        </div>
+                                        <div class="control-row">
+                                            <button id="resetBtn" class="sim-btn reset-btn">Reset</button>
+                                            <button id="speedBtn" class="sim-btn speed-btn">2x Speed</button>
+                                        </div>
+                                        <div class="info-item">
+                                            <span class="info-label">Speed:</span>
+                                            <span id="speedDisplay">1x</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span class="info-label">Step Size:</span>
+                                            <span id="stepSizeDisplay">1.0</span>
+                                        </div>
                                     </div>
-                                    <button id="startBtn" class="sim-btn start-btn">Start</button>
-                                    <button id="stopBtn" class="sim-btn stop-btn" disabled>Stop</button>
-                                    <button id="resetBtn" class="sim-btn reset-btn">Reset</button>
-                                    <button id="speedBtn" class="sim-btn speed-btn">2x Speed</button>
-                                    <div class="info-item">
-                                        <span class="info-label">Speed:</span>
-                                        <span id="speedDisplay">1x</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="simulation-info">
-                                    <div class="info-item">
-                                        <span class="info-label">Time:</span>
-                                        <span id="timeDisplay">0</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <span class="info-label">Step Size:</span>
-                                        <span id="stepSizeDisplay">1.0</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <span class="info-label">Speed:</span>
-                                        <span id="speedDisplay">1x</span>
-                                    </div>
-                                </div>
-                                
-                                <canvas id="randomWalkCanvas" width="800" height="450"></canvas>
-                                
-                                <div class="simulation-description">
-                                    <p><strong>How it works:</strong> The particle moves up (+1) or down (-1) randomly at each time step. The display height grows as √t to show the characteristic scaling of random walks.</p>
-                                    <p><strong>Speed Control:</strong> Use the "2x Speed" button to double the simulation speed at any time.</p>
                                 </div>
                             </div>
-                        </div>
+                            
+                            <div class="simulation-description">
+                                <p><strong>How it works:</strong> The particle moves up (+1) or down (-1) randomly at each time step. The display height grows as √t to show the characteristic scaling of random walks.</p>
+                                <p><strong>Speed Control:</strong> Use the "2x Speed" button to double the simulation speed at any time.</p>
+                                </div>
+                            </div>
                     </div>
                     <div class="slide">
                         <div class="slide-content">
@@ -152,45 +156,39 @@
                             <h2>Discrete vs Continuous Random Walk</h2>
                             <p>Compare discrete random walk (blue) with continuous normal steps (green) - both converge to Brownian motion.</p>
                             
-                            <div class="simulation-container">
-                                <div class="simulation-controls">
-                                    <div class="info-item">
-                                        <span class="info-label">Time:</span>
-                                        <span id="timeDisplay2">0</span>
+                            <div class="simulation-layout">
+                                <canvas id="randomWalkCanvas2" width="1800" height="1013"></canvas>
+                                <div class="simulation-controls-panel">
+                                    <div class="simulation-controls">
+                                        <div class="info-item">
+                                            <span class="info-label">Time:</span>
+                                            <span id="timeDisplay2">0</span>
+                                        </div>
+                                        <div class="control-row">
+                                            <button id="startBtn2" class="sim-btn start-btn">Start</button>
+                                            <button id="stopBtn2" class="sim-btn stop-btn" disabled>Stop</button>
+                                        </div>
+                                        <div class="control-row">
+                                            <button id="resetBtn2" class="sim-btn reset-btn">Reset</button>
+                                            <button id="speedBtn2" class="sim-btn speed-btn">2x Speed</button>
+                                        </div>
+                                        <div class="info-item">
+                                            <span class="info-label">Speed:</span>
+                                            <span id="speedDisplay2">1x</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span class="info-label">Step Size:</span>
+                                            <span id="stepSizeDisplay2">1.0</span>
+                                        </div>
                                     </div>
-                                    <button id="startBtn2" class="sim-btn start-btn">Start</button>
-                                    <button id="stopBtn2" class="sim-btn stop-btn" disabled>Stop</button>
-                                    <button id="resetBtn2" class="sim-btn reset-btn">Reset</button>
-                                    <button id="speedBtn2" class="sim-btn speed-btn">2x Speed</button>
-                                    <div class="info-item">
-                                        <span class="info-label">Speed:</span>
-                                        <span id="speedDisplay2">1x</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="simulation-info">
-                                    <div class="info-item">
-                                        <span class="info-label">Time:</span>
-                                        <span id="timeDisplay2">0</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <span class="info-label">Step Size:</span>
-                                        <span id="stepSizeDisplay2">1.0</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <span class="info-label">Speed:</span>
-                                        <span id="speedDisplay2">1x</span>
-                                    </div>
-                                </div>
-                                
-                                <canvas id="randomWalkCanvas2" width="800" height="450"></canvas>
-                                
-                                <div class="simulation-description">
-                                    <p><strong>Blue path:</strong> Discrete random walk (+1 or -1 steps). <strong>Green path:</strong> Continuous normal random steps.</p>
-                                    <p><strong>Speed Control:</strong> Use the "2x Speed" button to double the simulation speed for both trajectories.</p>
                                 </div>
                             </div>
-                        </div>
+                            
+                            <div class="simulation-description">
+                                <p><strong>Blue path:</strong> Discrete random walk (+1 or -1 steps). <strong>Green path:</strong> Continuous normal random steps.</p>
+                                <p><strong>Speed Control:</strong> Use the "2x Speed" button to double the simulation speed for both trajectories.</p>
+                                </div>
+                            </div>
                     </div>
                     <div class="slide">
                         <div class="slide-content">
@@ -204,14 +202,6 @@
                             </blockquote>
                         </div>
                     </div>
-                    
-                    <button class="slide-arrow slide-arrow-left" onclick="changeSlide(-1, 1)">
-                        <span class="arrow-icon">‹</span>
-                    </button>
-                    
-                    <button class="slide-arrow slide-arrow-right" onclick="changeSlide(1, 1)">
-                        <span class="arrow-icon">›</span>
-                    </button>
                 </div>
             </div>
 
@@ -303,5 +293,132 @@
 
     <script src="simulations.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Burger menu functionality
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const slideNavLeft = document.getElementById('slideNavLeft');
+        const slideNavRight = document.getElementById('slideNavRight');
+        
+        // Current slide tracking
+        let currentLecture = 1;
+        let currentSlide = 1;
+        
+        function updateSlideNavigation() {
+            const activeLecture = document.querySelector('.lecture.active');
+            if (!activeLecture) return;
+            
+            const lectureNumber = parseInt(activeLecture.id.split('-')[1]);
+            const slides = activeLecture.querySelectorAll('.slide');
+            const activeSlide = activeLecture.querySelector('.slide.active');
+            
+            if (!activeSlide) return;
+            
+            // Find current slide index
+            const slideIndex = Array.from(slides).indexOf(activeSlide);
+            currentLecture = lectureNumber;
+            currentSlide = slideIndex + 1;
+            
+            // Update button states
+            slideNavLeft.disabled = (currentLecture === 1 && currentSlide === 1);
+            slideNavRight.disabled = false; // Will be handled by existing logic
+        }
+        
+        function navigateSlide(direction) {
+            // Use existing changeSlide function if available
+            if (typeof changeSlide === 'function') {
+                changeSlide(direction, currentLecture);
+                setTimeout(updateSlideNavigation, 100); // Update after slide change
+            }
+        }
+        
+        function toggleSidebar() {
+            burgerMenu.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+        }
+        
+        function closeSidebar() {
+            burgerMenu.classList.remove('active');
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+        }
+        
+        function toggleFullscreen() {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement) {
+                // Enter fullscreen
+                const element = document.documentElement;
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                }
+            } else {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                }
+            }
+        }
+        
+        burgerMenu.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', closeSidebar);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        slideNavLeft.addEventListener('click', () => navigateSlide(-1));
+        slideNavRight.addEventListener('click', () => navigateSlide(1));
+        
+        // Close sidebar when a tab is clicked
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', closeSidebar);
+        });
+        
+        // Update slide title in header bar
+        function updateSlideTitle() {
+            const activeSlide = document.querySelector('.slide.active');
+            const activeTab = document.querySelector('.tab-button.active');
+            const slideTitle = document.getElementById('slideTitle');
+            
+            if (activeSlide && activeTab && slideTitle) {
+                // Get lecture name
+                const lectureName = activeTab.textContent;
+                
+                // Get current slide number
+                const currentSlideElement = activeSlide.querySelector('.current-slide');
+                const currentSlideNo = currentSlideElement ? currentSlideElement.textContent : '1';
+                
+                // Get total slides for current lecture
+                const totalSlidesElement = activeSlide.querySelector('.total-slides');
+                const totalSlides = totalSlidesElement ? totalSlidesElement.textContent : '1';
+                
+                // Get slide name
+                const h2Element = activeSlide.querySelector('h2');
+                const slideName = h2Element ? h2Element.textContent : 'Slide';
+                
+                // Format: [lecture name] > [current slide no] / [total slide no for lecture] : [slide name]
+                slideTitle.textContent = `${lectureName} > ${currentSlideNo} / ${totalSlides} : ${slideName}`;
+            }
+        }
+        
+        // Update title when page loads
+        updateSlideTitle();
+        updateSlideNavigation();
+        
+        // Update title when slides change (observe for changes)
+        const observer = new MutationObserver(() => {
+            updateSlideTitle();
+            updateSlideNavigation();
+        });
+        document.querySelectorAll('.slide').forEach(slide => {
+            observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
+        });
+    </script>
 </body>
 </html>

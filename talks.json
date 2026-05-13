@@ -1,0 +1,99 @@
+{
+  "schedule": [
+    {
+      "index": 0,
+      "time": "09:00 - 09:30",
+      "type": "activity",
+      "title": "Opening Ceremony & Welcome",
+      "location": "Main Hall"
+    },
+    {
+      "index": 1,
+      "time": "09:30 - 10:30",
+      "type": "talk",
+      "group": 1,
+      "initials": "SC",
+      "title": "Advanced Periodic Boundary Conditions",
+      "abstract": "Exploring modern approaches to simulating particle systems with periodic boundary conditions, including optimizations for GPU computing and strategies for handling long-range interactions efficiently."
+    },
+    {
+      "index": 2,
+      "time": "10:30 - 11:00",
+      "type": "activity",
+      "title": "Coffee Break",
+      "location": "Foyer"
+    },
+    {
+      "index": 3,
+      "type": "talk_session",
+      "title": "Parallel Sessions A & B",
+      "talks": [
+        {
+          "time": "11:00 - 12:00",
+          "group": 2,
+          "initials": "MB",
+          "title": "Numerical Stability in Long-Range Interactions",
+          "abstract": "Recent advances in maintaining numerical stability for long-range force calculations in large-scale simulations, with practical implementations and benchmarking results."
+        },
+        {
+          "time": "11:00 - 12:00",
+          "group": 3,
+          "initials": "AR",
+          "title": "Scaling Simulations to Billions of Particles",
+          "abstract": "Techniques for efficient parallelization and memory management when simulating massive particle systems. Learn best practices for distributed computing, load balancing, and performance optimization at exascale."
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "time": "12:00 - 13:30",
+      "type": "activity",
+      "title": "Lunch",
+      "location": "Dining Area"
+    },
+    {
+      "index": 5,
+      "type": "talk_session",
+      "title": "Parallel Sessions C & D",
+      "talks": [
+        {
+          "time": "13:30 - 14:30",
+          "group": 4,
+          "initials": "JK",
+          "title": "Machine Learning for Particle Dynamics Prediction",
+          "abstract": "Novel approaches using neural networks and deep learning to predict particle behavior and accelerate simulations by several orders of magnitude."
+        },
+        {
+          "time": "14:30 - 15:30",
+          "group": 5,
+          "initials": "ML",
+          "title": "Energy Conservation in Molecular Dynamics",
+          "abstract": "Methods for maintaining energy conservation in MD simulations with adaptive timesteps and symplectic integrators for long-term stability."
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "time": "15:30 - 16:00",
+      "type": "activity",
+      "title": "Coffee Break",
+      "location": "Foyer"
+    },
+    {
+      "index": 7,
+      "time": "16:00 - 17:00",
+      "type": "talk",
+      "group": 6,
+      "initials": "TP",
+      "title": "Visualization Techniques for Large-Scale Simulations",
+      "abstract": "Advanced visualization strategies for understanding particle dynamics in billion-particle systems using GPU rendering and progressive refinement."
+    },
+    {
+      "index": 8,
+      "time": "17:00 - 18:00",
+      "type": "activity",
+      "title": "Networking Reception",
+      "location": "Main Hall"
+    }
+  ]
+}

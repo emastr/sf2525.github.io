@@ -12,7 +12,6 @@ let currentSlides = {
 document.addEventListener('DOMContentLoaded', function() {
     initializeTabs();
     initializeSlideshow();
-    initializeFullscreen();
     initializeSimulations(); // From simulations.js
 });
 
@@ -51,7 +50,7 @@ function initializeSlideshow() {
     }
 }
 
-// Change slide within a lecture
+// Change slide within or across lectures
 function changeSlide(direction, lectureNumber) {
     const lecture = document.querySelector(`#lecture-${lectureNumber}`);
     const slides = lecture.querySelectorAll('.slide');
@@ -59,28 +58,52 @@ function changeSlide(direction, lectureNumber) {
     
     // Calculate new slide number
     let newSlideNumber = currentSlides[lectureNumber] + direction;
+    let newLectureNumber = lectureNumber;
     
-    // Boundary checks
-    if (newSlideNumber < 1) {
+    // Handle cross-lecture navigation
+    if (newSlideNumber < 1 && lectureNumber > 1) {
+        // Go to previous lecture's last slide
+        newLectureNumber = lectureNumber - 1;
+        const prevLecture = document.querySelector(`#lecture-${newLectureNumber}`);
+        const prevSlides = prevLecture.querySelectorAll('.slide');
+        newSlideNumber = prevSlides.length;
+        
+        // Switch lecture tab
+        switchTab(newLectureNumber);
+    } else if (newSlideNumber > totalSlides && lectureNumber < 3) {
+        // Go to next lecture's first slide
+        newLectureNumber = lectureNumber + 1;
         newSlideNumber = 1;
-    } else if (newSlideNumber > totalSlides) {
-        newSlideNumber = totalSlides;
+        
+        // Switch lecture tab
+        switchTab(newLectureNumber);
+    } else {
+        // Stay within current lecture boundaries
+        if (newSlideNumber < 1) {
+            newSlideNumber = 1;
+        } else if (newSlideNumber > totalSlides) {
+            newSlideNumber = totalSlides;
+        }
     }
     
-    // Only proceed if slide number changed
-    if (newSlideNumber !== currentSlides[lectureNumber]) {
-        // Hide current slide
-        slides[currentSlides[lectureNumber] - 1].classList.remove('active');
+    // Only proceed if slide number or lecture changed
+    if (newSlideNumber !== currentSlides[newLectureNumber] || newLectureNumber !== lectureNumber) {
+        // If lecture changed, we've already switched tabs, just need to update slides
+        const targetLecture = document.querySelector(`#lecture-${newLectureNumber}`);
+        const targetSlides = targetLecture.querySelectorAll('.slide');
+        
+        // Hide current slide in target lecture
+        targetSlides[currentSlides[newLectureNumber] - 1].classList.remove('active');
         
         // Show new slide
-        slides[newSlideNumber - 1].classList.add('active');
+        targetSlides[newSlideNumber - 1].classList.add('active');
         
         // Update current slide number
-        currentSlides[lectureNumber] = newSlideNumber;
+        currentSlides[newLectureNumber] = newSlideNumber;
         
-        // Update UI
-        updateSlideCounter(lectureNumber);
-        updateNavigationButtons(lectureNumber);
+        // Update UI for target lecture
+        updateSlideCounter(newLectureNumber);
+        updateNavigationButtons(newLectureNumber);
     }
 }
 
@@ -175,159 +198,5 @@ function handleSwipe() {
             // Swipe right - previous slide
             changeSlide(-1, lectureNumber);
         }
-    }
-}
-
-// Initialize fullscreen functionality
-function initializeFullscreen() {
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    
-    if (fullscreenBtn) {
-        fullscreenBtn.addEventListener('click', toggleFullscreen);
-    }
-    
-    // Listen for fullscreen changes to update button
-    document.addEventListener('fullscreenchange', updateFullscreenButton);
-    document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
-    document.addEventListener('mozfullscreenchange', updateFullscreenButton);
-    document.addEventListener('MSFullscreenChange', updateFullscreenButton);
-}
-
-// Toggle fullscreen mode
-function toggleFullscreen() {
-    const slideContainer = document.querySelector('.lecture-content');
-    
-    if (!document.fullscreenElement && 
-        !document.webkitFullscreenElement && 
-        !document.mozFullScreenElement && 
-        !document.msFullscreenElement) {
-        // Enter fullscreen
-        if (slideContainer.requestFullscreen) {
-            slideContainer.requestFullscreen();
-        } else if (slideContainer.webkitRequestFullscreen) {
-            slideContainer.webkitRequestFullscreen();
-        } else if (slideContainer.mozRequestFullScreen) {
-            slideContainer.mozRequestFullScreen();
-        } else if (slideContainer.msRequestFullscreen) {
-            slideContainer.msRequestFullscreen();
-        }
-    } else {
-        // Exit fullscreen
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-        }
-    }
-}
-
-// Update fullscreen button appearance
-function updateFullscreenButton() {
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    if (!fullscreenBtn) return;
-    
-    const isFullscreen = document.fullscreenElement || 
-                        document.webkitFullscreenElement || 
-                        document.mozFullScreenElement || 
-                        document.msFullscreenElement;
-    
-    fullscreenBtn.title = isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen';
-    
-    // Resize canvas if in fullscreen
-    if (isFullscreen) {
-        resizeCanvasForFullscreen();
-    } else {
-        restoreCanvasSize();
-    }
-}
-
-// Initialize fullscreen functionality
-function initializeFullscreen() {
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    
-    if (fullscreenBtn) {
-        fullscreenBtn.addEventListener('click', toggleFullscreen);
-    }
-    
-    // Listen for fullscreen changes to update button
-    document.addEventListener('fullscreenchange', updateFullscreenButton);
-    document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
-    document.addEventListener('mozfullscreenchange', updateFullscreenButton);
-    document.addEventListener('MSFullscreenChange', updateFullscreenButton);
-}
-
-// Toggle fullscreen mode
-function toggleFullscreen() {
-    const slideContainer = document.querySelector('.lecture-content');
-    
-    if (!document.fullscreenElement && 
-        !document.webkitFullscreenElement && 
-        !document.mozFullScreenElement && 
-        !document.msFullscreenElement) {
-        // Enter fullscreen
-        if (slideContainer.requestFullscreen) {
-            slideContainer.requestFullscreen();
-        } else if (slideContainer.webkitRequestFullscreen) {
-            slideContainer.webkitRequestFullscreen();
-        } else if (slideContainer.mozRequestFullScreen) {
-            slideContainer.mozRequestFullScreen();
-        } else if (slideContainer.msRequestFullscreen) {
-            slideContainer.msRequestFullscreen();
-        }
-    } else {
-        // Exit fullscreen
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-        }
-    }
-}
-
-// Update fullscreen button appearance
-function updateFullscreenButton() {
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    if (!fullscreenBtn) return;
-    
-    const isFullscreen = document.fullscreenElement || 
-                        document.webkitFullscreenElement || 
-                        document.mozFullScreenElement || 
-                        document.msFullscreenElement;
-    
-    fullscreenBtn.title = isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen';
-}// Resize canvas for fullscreen mode
-function resizeCanvasForFullscreen() {
-    const canvas = document.getElementById('particleBoxCanvas');
-    if (canvas) {
-        // Store original dimensions
-        if (!canvas.originalWidth) {
-            canvas.originalWidth = canvas.width;
-            canvas.originalHeight = canvas.height;
-        }
-        
-        // Set fullscreen dimensions
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight - 120; // Leave space for controls
-        canvas.style.width = window.innerWidth + 'px';
-        canvas.style.height = (window.innerHeight - 120) + 'px';
-    }
-}
-
-// Restore original canvas size
-function restoreCanvasSize() {
-    const canvas = document.getElementById('particleBoxCanvas');
-    if (canvas && canvas.originalWidth) {
-        canvas.width = canvas.originalWidth;
-        canvas.height = canvas.originalHeight;
-        canvas.style.width = canvas.originalWidth + 'px';
-        canvas.style.height = canvas.originalHeight + 'px';
     }
 }

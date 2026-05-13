@@ -10,44 +10,245 @@ body {
     color: #e0e0e0;
     background: #121212;
     min-height: 100vh;
+    transition: margin-left 0.3s ease;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+/* Fixed Header Bar */
+.header-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: #1a1a1a;
+    border-bottom: 2px solid #404040;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1002;
+    gap: 20px;
 }
 
-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-header h1 {
+.slide-title {
     color: #ffffff;
-    font-size: 2.5rem;
-    text-shadow: none;
-    margin-bottom: 10px;
-    font-weight: 300;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0;
+    flex-grow: 1;
 }
 
-/* Tab Navigation */
-.tab-container {
-    margin-bottom: 30px;
+/* Burger Menu */
+.burger-menu {
+    background: #2a2a2a;
+    border: 1px solid #404040;
+    border-radius: 4px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
-.tabs {
+/* Fullscreen Button */
+.fullscreen-btn {
+    background: #2a2a2a;
+    border: 1px solid #404040;
+    border-radius: 4px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
     display: flex;
     justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    align-items: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    color: #e0e0e0;
 }
 
-.tab-button {
+.fullscreen-btn:hover,
+.burger-menu:hover {
+    background: #3a3a3a;
+}
+
+/* Slide Navigation Buttons */
+.slide-nav-btn {
+    background: #2a2a2a;
+    border: 1px solid #404040;
+    border-radius: 4px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    color: #e0e0e0;
+    font-size: 24px;
+}
+
+.slide-nav-btn:hover {
+    background: #3a3a3a;
+}
+
+.slide-nav-btn:disabled {
+    background: #1a1a1a;
+    color: #555;
+    cursor: not-allowed;
+}
+
+.burger-menu span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #e0e0e0;
+    border-radius: 1px;
+    transition: all 0.3s ease;
+}
+
+.burger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.burger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background: #1e1e1e;
+    border-right: 2px solid #404040;
+    z-index: 1000;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-content {
+    padding: 80px 30px 30px;
+}
+
+.sidebar h1 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    text-shadow: none;
+    margin-bottom: 30px;
+    font-weight: 300;
+    text-align: center;
+}
+
+.sidebar-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sidebar .tab-button {
     background: #2a2a2a;
     border: 1px solid #404040;
     color: #e0e0e0;
-    padding: 12px 24px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100%;
+}
+
+.sidebar .tab-button:hover {
+    background: #3a3a3a;
+    border-color: #555;
+    transform: translateY(-1px);
+}
+
+.sidebar .tab-button.active {
+    background: #007acc;
+    border-color: #0099ff;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 122, 204, 0.3);
+}
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.container {
+    max-width: 95vw; /* Use 95% of viewport width instead of fixed pixel limit */
+    width: 100%;
+    margin: 0 auto;
+    padding: 90px 20px 20px; /* Increased top padding for header bar */
+    transition: all 0.3s ease;
+}
+
+/* Fullscreen mode adjustments */
+:fullscreen .container,
+:-webkit-full-screen .container,
+:-moz-full-screen .container {
+    max-width: none;
+    padding: 90px 40px 40px;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+:fullscreen canvas,
+:-webkit-full-screen canvas,
+:-moz-full-screen canvas {
+    max-width: calc(100vw - 80px);
+    max-height: calc(100vh - 200px);
+    width: auto;
+    height: auto;
+}
+
+:fullscreen .simulation-container,
+:-webkit-full-screen .simulation-container,
+:-moz-full-screen .simulation-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Fullscreen icon change */
+:fullscreen .fullscreen-btn svg,
+:-webkit-full-screen .fullscreen-btn svg,
+:-moz-full-screen .fullscreen-btn svg {
+    transform: rotate(180deg);
+}
     border-radius: 0;
     cursor: pointer;
     font-size: 1rem;
@@ -55,18 +256,6 @@ header h1 {
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-}
-
-.tab-button:hover {
-    background: #404040;
-    border-color: #606060;
-    transform: none;
-}
-
-.tab-button.active {
-    background: #000000;
-    color: #ffffff;
-    border-color: #888888;
 }
 
 /* Lecture Content */
@@ -86,6 +275,44 @@ header h1 {
     display: block;
 }
 
+/* Hide slide metadata from main view (but keep in DOM for header) */
+.slide-content .slide-counter,
+.slide-content h2,
+.slide-content > p:first-of-type {
+    display: none !important;
+}
+
+/* Simulation Layout */
+.simulation-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    width: 100%;
+    max-width: none;
+}
+
+.simulation-layout canvas {
+    width: 80%;
+    max-width: 80%;
+    height: auto;
+    flex-shrink: 0;
+    border: 2px solid #404040;
+    border-radius: 4px;
+}
+
+.simulation-controls-panel {
+    width: 20%;
+    max-width: 20%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #1e1e1e;
+    border: 1px solid #404040;
+    border-radius: 8px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 /* Slideshow Container */
 .slideshow-container {
     position: relative;
@@ -94,7 +321,7 @@ header h1 {
 
 .slide {
     display: none;
-    padding: 40px;
+    padding: 20px 10px; /* Reduced from 40px to allow more width */
     min-height: 500px;
     background: transparent;
     position: relative;
@@ -117,8 +344,8 @@ header h1 {
 }
 
 .slide-content {
-    max-width: 800px;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0;
 }
 
 .slide-content h2 {
@@ -235,145 +462,6 @@ blockquote {
     margin-top: 0px;
 }
 
-.slide-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-}
-
-.fullscreen-btn {
-    background: #2a2a2a;
-    border: 1px solid #404040;
-    color: #e0e0e0;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.2s ease;
-}
-
-.fullscreen-btn:hover {
-    background: #404040;
-    border-color: #606060;
-}
-
-.fullscreen-btn:active {
-    background: #505050;
-}
-
-/* Fullscreen styles */
-.lecture-content:fullscreen {
-    background: #121212;
-    padding: 0;
-    position: relative;
-}
-
-.lecture-content:-webkit-full-screen {
-    background: #121212;
-    padding: 0;
-    position: relative;
-}
-
-.lecture-content:-moz-full-screen {
-    background: #121212;
-    padding: 0;
-    position: relative;
-}
-
-.lecture-content:-ms-fullscreen {
-    background: #121212;
-    padding: 0;
-    position: relative;
-}
-
-/* Hide elements in fullscreen */
-.lecture-content:fullscreen h2,
-.lecture-content:fullscreen p,
-.lecture-content:fullscreen .slide-nav,
-.lecture-content:fullscreen .slide-counter {
-    display: none;
-}
-
-.lecture-content:-webkit-full-screen h2,
-.lecture-content:-webkit-full-screen p,
-.lecture-content:-webkit-full-screen .slide-nav,
-.lecture-content:-webkit-full-screen .slide-counter {
-    display: none;
-}
-
-.lecture-content:-moz-full-screen h2,
-.lecture-content:-moz-full-screen p,
-.lecture-content:-moz-full-screen .slide-nav,
-.lecture-content:-moz-full-screen .slide-counter {
-    display: none;
-}
-
-.lecture-content:-ms-fullscreen h2,
-.lecture-content:-ms-fullscreen p,
-.lecture-content:-ms-fullscreen .slide-nav,
-.lecture-content:-ms-fullscreen .slide-counter {
-    display: none;
-}
-
-/* Position fullscreen button in top right corner when in fullscreen */
-.lecture-content:fullscreen .fullscreen-btn {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-    background: rgba(42, 42, 42, 0.9);
-    backdrop-filter: blur(5px);
-}
-
-.lecture-content:-webkit-full-screen .fullscreen-btn {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-    background: rgba(42, 42, 42, 0.9);
-    backdrop-filter: blur(5px);
-}
-
-.lecture-content:-moz-full-screen .fullscreen-btn {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-    background: rgba(42, 42, 42, 0.9);
-    backdrop-filter: blur(5px);
-}
-
-.lecture-content:-ms-fullscreen .fullscreen-btn {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-    background: rgba(42, 42, 42, 0.9);
-    backdrop-filter: blur(5px);
-}
-
-/* Expand simulation container in fullscreen */
-.lecture-content:fullscreen .simulation-container,
-.lecture-content:-webkit-full-screen .simulation-container,
-.lecture-content:-moz-full-screen .simulation-container,
-.lecture-content:-ms-fullscreen .simulation-container {
-    height: 100vh;
-    max-height: none;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Make canvas take full height in fullscreen */
-.lecture-content:fullscreen #particleBoxCanvas,
-.lecture-content:-webkit-full-screen #particleBoxCanvas,
-.lecture-content:-moz-full-screen #particleBoxCanvas,
-.lecture-content:-ms-fullscreen #particleBoxCanvas {
-    height: calc(100vh - 120px) !important;
-    width: 100vw !important;
-    max-width: none !important;
-}
-
 .current-slide {
     color: #ffffff;
     font-weight: 700;
@@ -392,21 +480,45 @@ blockquote {
 
 .simulation-controls {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    background: rgba(42, 42, 42, 0.9);
-    padding: 10px 15px;
+    flex-direction: column;
+    gap: 8px;
+    background: #2a2a2a;
     border: 1px solid #404040;
-    margin-bottom: 10px;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.simulation-controls:last-child {
+    margin-bottom: 0;
+}
+
+/* Horizontal layout for buttons within control groups */
+.control-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.control-row .sim-btn {
+    flex: 1;
+    min-width: 0;
 }
 
 .sim-btn {
     background: #1a1a1a;
     color: #e0e0e0;
     border: 1px solid #404040;
-    padding: 10px 20px;
-    border-radius: 0;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
     cursor: pointer;
     font-size: 0.95rem;
     font-weight: 600;
@@ -591,4 +703,31 @@ blockquote {
     .slide-content p {
         font-size: 1rem;
     }
+}
+
+/* Additional fullscreen layout adjustments for simulation-layout */
+:fullscreen .simulation-layout,
+:-webkit-full-screen .simulation-layout,
+:-moz-full-screen .simulation-layout {
+    width: 100%;
+    height: calc(100vh - 140px);
+    gap: 30px;
+    display: flex;
+    align-items: flex-start;
+}
+
+:fullscreen .simulation-layout canvas,
+:-webkit-full-screen .simulation-layout canvas,
+:-moz-full-screen .simulation-layout canvas {
+    width: 80% !important;
+    max-width: 80% !important;
+    height: auto;
+}
+
+:fullscreen .simulation-controls-panel,
+:-webkit-full-screen .simulation-controls-panel,
+:-moz-full-screen .simulation-controls-panel {
+    width: 15% !important;
+    max-width: 15% !important;
+    background: rgba(30, 30, 30, 0.95);
 }
