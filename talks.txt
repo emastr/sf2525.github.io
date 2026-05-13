@@ -1,0 +1,54 @@
+
+1) Weak Convergence and Long-Time accuracy in Brownian Dynamics
+Zhiyan, Axel
+
+2) Computational Modeling of Disease Spread
+Hugo, Emmie
+
+3) Diffusion Approximation of Levy Processes
+Daniel, Guiseppe
+
+4) Training a Neural Net on a Neural Net
+Valter, Albin
+
+5) Fractional Brownian Motion: Theory and Applications
+Edith
+
+6) Flow Matching and Diffusion Models for image generation
+Johan, Simon
+
+7) Image Generation by Diffusion Models: Can AI Reproduce Doctor’s Handwriting?
+Maximilian, Evelina
+
+8) Overcoming the Curse of Dimensionality: Solving High-Dimensional PDEs via Deep Learning
+Calle, Truls
+
+9) Noise Corrected Langevin Algorithm
+Leo, Vilém
+
+10) Levy Processes
+Theo, Pema Mercereau-Boland
+
+11) Mean-Field neural networks: learning mappings on Wasserstein space
+Reda
+
+12) SGD as a Stochastic Differential Equation
+Vihelm, Alexander
+
+13) Parameter estimation of a stochastic climate model
+Sebastian, Roman
+
+14) Volatility analysis
+Johannes, Linn
+
+15) Score-based generative modeling through stochastic Differential Equations
+Atina, Jonathan
+
+16) Numerical Solvers for Reverse-Time SDEs in Score-Based Generative Models
+Elliot, Yuhan
+
+17) SDE Infectious Disease Modelling for Malaria
+Kevin, Thomas
+
+18) Stochastic resonance in climatic change
+Killian, Amine

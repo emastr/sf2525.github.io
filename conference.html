@@ -6,6 +6,53 @@
     <title>Conference Information</title>
     <link rel="stylesheet" href="styles.css?v=20260513">
     <style>
+        body {
+            background: #ffffff;
+            color: #111111;
+        }
+
+        .header-bar {
+            background: #0b2e59;
+            border-bottom: 2px solid #08203d;
+        }
+
+        .slide-title {
+            color: #ffffff;
+        }
+
+        .sidebar {
+            background: #0b2e59;
+            border-right: 2px solid #08203d;
+        }
+
+        .sidebar h1 {
+            color: #ffffff;
+        }
+
+        .sidebar .tab-button {
+            background: #11417b;
+            border: 1px solid #1f5ea6;
+            color: #ffffff;
+        }
+
+        .sidebar .tab-button:hover {
+            background: #165396;
+            border-color: #2a6ebb;
+        }
+
+        .burger-menu {
+            background: #11417b;
+            border: 1px solid #1f5ea6;
+        }
+
+        .burger-menu:hover {
+            background: #165396;
+        }
+
+        .burger-menu span {
+            background: #ffffff;
+        }
+
         .conference-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -16,19 +63,19 @@
             text-align: center;
             margin-bottom: 60px;
             padding-bottom: 30px;
-            border-bottom: 2px solid #404040;
+            border-bottom: 2px solid #d6d6d6;
         }
 
         .conference-header h1 {
             font-size: 2.5rem;
-            color: #ffffff;
+            color: #0b2e59;
             margin-bottom: 10px;
             font-weight: 300;
         }
 
         .conference-subtitle {
             font-size: 1.2rem;
-            color: #a0a0a0;
+            color: #222222;
             margin-bottom: 20px;
         }
 
@@ -46,7 +93,7 @@
 
         .meta-label {
             font-size: 0.9rem;
-            color: #808080;
+            color: #1c3f70;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 5px;
@@ -54,16 +101,16 @@
 
         .meta-value {
             font-size: 1.1rem;
-            color: #e0e0e0;
+            color: #111111;
         }
 
         .nav-link {
             display: inline-block;
             margin-bottom: 30px;
             padding: 10px 20px;
-            background: #2a2a2a;
-            border: 1px solid #404040;
-            color: #0099ff;
+            background: #0b2e59;
+            border: 1px solid #08203d;
+            color: #ffffff;
             text-decoration: none;
             border-radius: 4px;
             transition: all 0.3s ease;
@@ -71,8 +118,8 @@
         }
 
         .nav-link:hover {
-            background: #3a3a3a;
-            border-color: #0099ff;
+            background: #11417b;
+            border-color: #1f5ea6;
         }
 
         .section {
@@ -81,10 +128,10 @@
 
         .section-title {
             font-size: 1.8rem;
-            color: #ffffff;
+            color: #0b2e59;
             margin-bottom: 30px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #007acc;
+            border-bottom: 2px solid #0b2e59;
             font-weight: 400;
         }
 
@@ -194,22 +241,22 @@
         .schedule-table {
             width: 100%;
             border-collapse: collapse;
-            background: #1e1e1e;
+            background: #ffffff;
             border-radius: 8px;
             overflow: hidden;
-            border: 1px solid #404040;
+            border: 1px solid #d0d0d0;
         }
 
         .schedule-table th,
         .schedule-table td {
             padding: 20px;
             text-align: left;
-            border-bottom: 1px solid #404040;
+            border-bottom: 1px solid #dcdcdc;
         }
 
         .schedule-table th {
-            background: #252525;
-            color: #0099ff;
+            background: #0b2e59;
+            color: #ffffff;
             font-weight: 600;
             text-transform: uppercase;
             font-size: 0.85rem;
@@ -221,21 +268,21 @@
         }
 
         .schedule-table tr:hover {
-            background: #242424;
+            background: #f3f7ff;
         }
 
         .time-slot {
-            color: #0099ff;
+            color: #0b2e59;
             font-weight: 500;
             min-width: 100px;
         }
 
         .schedule-item {
-            color: #e0e0e0;
+            color: #111111;
         }
 
         .schedule-speaker {
-            color: #a0a0a0;
+            color: #333333;
             font-size: 0.9rem;
             margin-top: 4px;
         }
@@ -272,7 +319,7 @@
         }
 
         .schedule-abstract-row {
-            background: #1a1a1a;
+            background: #ffffff;
         }
 
         .schedule-abstract-row.expanded {
@@ -281,19 +328,19 @@
 
         .schedule-abstract-cell {
             padding: 15px 20px !important;
-            background: #181818;
-            border-top: 2px solid #404040;
+            background: #f7f9fc;
+            border-top: 2px solid #d6e1ef;
         }
 
         .schedule-abstract-content {
-            background: #252525;
+            background: #eef4fb;
             padding: 12px;
-            border-left: 3px solid #0099ff;
+            border-left: 3px solid #0b2e59;
             border-radius: 4px;
         }
 
         .abstract-label {
-            color: #0099ff;
+            color: #0b2e59;
             font-weight: 600;
             font-size: 0.85rem;
             text-transform: uppercase;
@@ -302,20 +349,20 @@
         }
 
         .abstract-description {
-            color: #a0a0a0;
+            color: #111111;
             font-size: 0.9rem;
             line-height: 1.6;
         }
 
         .talk-session-row {
-            background: #252525;
-            border-left: 4px solid #0099ff;
+            background: #eaf2fd;
+            border-left: 4px solid #0b2e59;
         }
 
         .talk-session-row td {
             padding: 16px 20px !important;
             font-weight: 500;
-            color: #0099ff;
+            color: #0b2e59;
             font-size: 0.95rem;
         }
 
@@ -340,8 +387,8 @@
         }
 
         .session-toggle-btn {
-            background: #0099ff;
-            color: #121212;
+            background: #0b2e59;
+            color: #ffffff;
             border: none;
             padding: 6px 12px;
             border-radius: 3px;
@@ -355,12 +402,12 @@
         }
 
         .session-toggle-btn:hover {
-            background: #00ccff;
+            background: #11417b;
         }
 
         .talk-nested {
-            background: #1a1a1a;
-            border-left: 4px solid #0099ff;
+            background: #ffffff;
+            border-left: 4px solid #0b2e59;
         }
 
         .talk-nested.hidden {
@@ -369,7 +416,7 @@
 
         .talk-nested .time-slot {
             padding-left: 40px;
-            border-left: 2px solid #404040;
+            border-left: 2px solid #d0d0d0;
         }
 
         .talk-nested .schedule-item,
@@ -378,7 +425,7 @@
         }
 
         .talk-nested .talk-title {
-            color: #d0d0d0;
+            color: #111111;
             font-size: 0.9rem;
         }
 
@@ -392,7 +439,7 @@
         }
 
         .info-text {
-            color: #c0c0c0;
+            color: #111111;
             line-height: 1.8;
             margin-bottom: 15px;
             font-size: 1rem;
@@ -400,7 +447,7 @@
 
         .info-list {
             list-style: none;
-            color: #c0c0c0;
+            color: #111111;
             margin-left: 0;
         }
 
@@ -414,14 +461,14 @@
             content: "→";
             position: absolute;
             left: 0;
-            color: #0099ff;
+            color: #0b2e59;
             font-weight: bold;
         }
 
         .abstract-toggle-btn {
-            background: #2a2a2a;
-            border: 1px solid #404040;
-            color: #0099ff;
+            background: #ffffff;
+            border: 1px solid #0b2e59;
+            color: #0b2e59;
             padding: 6px 12px;
             border-radius: 4px;
             cursor: pointer;
@@ -433,12 +480,12 @@
         }
 
         .abstract-toggle-btn:hover {
-            background: #3a3a3a;
-            border-color: #0099ff;
+            background: #eef4fb;
+            border-color: #11417b;
         }
 
         .talk-title {
-            color: #e0e0e0;
+            color: #111111;
             font-size: 0.95rem;
         }
 
@@ -481,7 +528,6 @@
             <span></span>
         </button>
         <h2 class="slide-title">Conference Information</h2>
-        <a href="index.html" class="nav-link" style="position: absolute; right: 20px; margin: 0;">← Back to Lectures</a>
     </div>
 
     <!-- Sidebar -->
@@ -489,9 +535,8 @@
         <div class="sidebar-content">
             <h1>Conference</h1>
             <div class="sidebar-tabs">
-                <a href="#about" class="tab-button" style="display: block; text-decoration: none; color: #e0e0e0;">About</a>
-                <a href="#schedule" class="tab-button" style="display: block; text-decoration: none; color: #e0e0e0;">Schedule</a>
-                <a href="index.html" class="tab-button" style="display: block; text-decoration: none; color: #0099ff; background: #2a3a3a;">← Back to Lectures</a>
+                <a href="#about" class="tab-button" style="display: block; text-decoration: none; color: #ffffff;">About</a>
+                <a href="#schedule" class="tab-button" style="display: block; text-decoration: none; color: #ffffff;">Schedule</a>
             </div>
         </div>
     </div>
@@ -502,20 +547,16 @@
     <div class="conference-container">
         <!-- Header -->
         <div class="conference-header">
-            <h1>Annual Conference 2026</h1>
-            <p class="conference-subtitle">Exploring Advances in Computational Simulation</p>
+            <h1>Poster Session SF2525 VT26</h1>
+            <p class="conference-subtitle"> Projects in Stochastic Differential Equations</p>
             <div class="conference-meta">
                 <div class="meta-item">
                     <div class="meta-label">Date</div>
-                    <div class="meta-value">June 15-17, 2026</div>
+                    <div class="meta-value">May 18, 2026, <br>08:00 - 12:00</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">Location</div>
-                    <div class="meta-value">Virtual & Stockholm</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Attendees</div>
-                    <div class="meta-value">500+ Scientists</div>
+                    <div class="meta-value">Q21, <br> Malvinas Väg</div>
                 </div>
             </div>
         </div>
@@ -524,9 +565,7 @@
         <section id="about" class="section">
             <h2 class="section-title">About the Conference</h2>
             <p class="info-text">
-                Join us for our premier annual conference bringing together leading researchers, practitioners, and innovators 
-                in computational simulation and scientific computing. This year's focus is on emerging techniques in particle dynamics, 
-                advanced numerical methods, and next-generation simulation frameworks.
+                Welcome to the Poster Session for SF2525! This year, we have a diverse lineupp of 17 interesting projects. Throughout the day, you will take turns giving talks, attending and presenting at two scientific poster sessions. Before lunch, we will have a vote and announce the best poster. The session will be held in Q21, Malvinas Väg, on May 18th from 08:00 to 12:00. I encourage you to engage with the presenters, ask questions, and enjoy the variety of topics covered in stochastic differential equations. This session serves as a simulation of a real scientific conference and is usually how networking and collaborations start, so make the most of it! Bonus points if you can find common projects and discuss similarities and differences in approaches.
             </p>
         </section>
 
@@ -598,6 +637,93 @@
             }
         }
 
+        function parseTimeToMinutes(timeStr) {
+            if (typeof timeStr !== 'string' || !timeStr.includes(':')) {
+                return null;
+            }
+
+            const [hoursStr, minutesStr] = timeStr.split(':');
+            const hours = Number(hoursStr);
+            const minutes = Number(minutesStr);
+
+            if (!Number.isInteger(hours) || !Number.isInteger(minutes)) {
+                return null;
+            }
+
+            return hours * 60 + minutes;
+        }
+
+        function formatMinutesToTime(totalMinutes) {
+            if (!Number.isFinite(totalMinutes)) {
+                return '';
+            }
+
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+        }
+
+        function parseDurationMinutes(duration) {
+            if (typeof duration === 'number' && Number.isFinite(duration)) {
+                return duration;
+            }
+
+            if (typeof duration === 'string') {
+                const value = Number.parseFloat(duration.trim());
+                return Number.isFinite(value) ? value : null;
+            }
+
+            return null;
+        }
+
+        function parseRange(rangeStr) {
+            if (typeof rangeStr !== 'string' || !rangeStr.includes(' - ')) {
+                return null;
+            }
+
+            const [startStr, endStr] = rangeStr.split(' - ').map(part => part.trim());
+            const start = parseTimeToMinutes(startStr);
+            const end = parseTimeToMinutes(endStr);
+
+            if (start === null || end === null) {
+                return null;
+            }
+
+            return { start, end };
+        }
+
+        function computeTalkTime(talk, currentStartMinutes) {
+            const durationMinutes = parseDurationMinutes(talk.duration);
+
+            if (currentStartMinutes !== null && durationMinutes !== null) {
+                const start = currentStartMinutes;
+                const end = start + durationMinutes;
+                return {
+                    timeText: `${formatMinutesToTime(start)} - ${formatMinutesToTime(end)}`,
+                    start,
+                    end,
+                    usedDuration: true
+                };
+            }
+
+            const explicitRange = parseRange(talk.time);
+            if (explicitRange) {
+                return {
+                    timeText: talk.time,
+                    start: explicitRange.start,
+                    end: explicitRange.end,
+                    usedDuration: false
+                };
+            }
+
+            return {
+                timeText: talk.time || '',
+                start: null,
+                end: null,
+                usedDuration: false
+            };
+        }
+
         // Generate schedule table from JSON data
         function generateSchedule(scheduleData) {
             const tbody = document.getElementById('scheduleTableBody');
@@ -619,13 +745,35 @@
                     `;
                     tbody.appendChild(row);
                 } else if (item.type === 'talk_session') {
-                    // Talk session header with time range
-                    const firstTalkTime = item.talks[0].time;
-                    const lastTalkTime = item.talks[item.talks.length - 1].time;
-                    
-                    // Extract end time from last talk
-                    const timeRangeParts = lastTalkTime.split(' - ');
-                    const timeRange = `${firstTalkTime.split(' - ')[0]} - ${timeRangeParts[1]}`;
+                    // Talk session header with computed or explicit time range
+                    const sessionStartMinutes = parseTimeToMinutes(item.session_start || item.start_time);
+                    let currentTalkStartMinutes = sessionStartMinutes;
+                    let sessionFirstStart = null;
+                    let sessionLastEnd = null;
+                    const computedTalkTimes = [];
+
+                    item.talks.forEach((talk) => {
+                        const talkTimeInfo = computeTalkTime(talk, currentTalkStartMinutes);
+                        computedTalkTimes.push(talkTimeInfo);
+
+                        if (talkTimeInfo.start !== null && sessionFirstStart === null) {
+                            sessionFirstStart = talkTimeInfo.start;
+                        }
+                        if (talkTimeInfo.end !== null) {
+                            sessionLastEnd = talkTimeInfo.end;
+                        }
+
+                        if (talkTimeInfo.usedDuration && talkTimeInfo.end !== null) {
+                            currentTalkStartMinutes = talkTimeInfo.end;
+                        } else {
+                            currentTalkStartMinutes = null;
+                        }
+                    });
+
+                    let timeRange = item.time || '';
+                    if (!timeRange && sessionFirstStart !== null && sessionLastEnd !== null) {
+                        timeRange = `${formatMinutesToTime(sessionFirstStart)} - ${formatMinutesToTime(sessionLastEnd)}`;
+                    }
                     
                     const sessionId = `session-${displayIndex}`;
                     const sessionRow = document.createElement('tr');
@@ -648,16 +796,17 @@
 
                     // Add talks within the session
                     const talkRows = [];
-                    item.talks.forEach((talk) => {
+                    item.talks.forEach((talk, talkIndex) => {
                         const talkId = `talk-${talkCounter}`;
                         talkCounter++;
+                        const talkTimeInfo = computedTalkTimes[talkIndex];
 
                         // Talk row (nested)
                         const row = document.createElement('tr');
                         row.className = 'schedule-row talk-nested';
                         row.setAttribute('data-session-id', sessionId);
                         row.innerHTML = `
-                            <td class="time-slot">${talk.time}</td>
+                            <td class="time-slot">${talkTimeInfo.timeText}</td>
                             <td>
                                 <div class="talk-title">${talk.title}</div>
                                 <div class="talk-info-row">
@@ -742,11 +891,13 @@
                     // Talk row
                     const talkId = `talk-${talkCounter}`;
                     talkCounter++;
+                    const standaloneStartMinutes = parseTimeToMinutes(item.start_time);
+                    const talkTimeInfo = computeTalkTime(item, standaloneStartMinutes);
 
                     const row = document.createElement('tr');
                     row.className = 'schedule-row';
                     row.innerHTML = `
-                        <td class="time-slot">${item.time}</td>
+                        <td class="time-slot">${talkTimeInfo.timeText}</td>
                         <td>
                             <div class="talk-title">${item.title}</div>
                             <div class="talk-info-row">

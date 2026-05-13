@@ -1,0 +1,52 @@
+Group 1: Extensions and theory
+Focus: The fundamental mathematical behavior of non-standard Brownian and Levy paths.
+
+1) Weak Convergence and Long-Time accuracy in Brownian Dynamics 
+
+2) Diffusion Approximation of Levy Processes 
+
+3) Fractional Brownian Motion: Theory and Applications 
+
+4) Levy Processes 
+
+
+Group 2: High-Dimensional PDEs & Optimization
+Focus: Algorithmic approaches to solving complex equations and understanding SGD.
+
+5) Overcoming the Curse of Dimensionality: Solving High-Dimensional PDEs via Deep Learning
+
+6) Noise Corrected Langevin Algorithm
+
+7) Mean-Field neural networks: learning mappings on Wasserstein space
+
+8) SGD as a Stochastic Differential Equation
+
+
+Group 3: Applications to Biology, Climate & Finance
+Focus: Utilizing SDEs to represent real-world systems in nature and markets.
+
+9) Computational Modeling of Disease Spread
+
+10) SDE Infectious Disease Modelling for Malaria 
+
+11) Parameter estimation of a stochastic climate model
+
+12) Stochastic resonance in climatic change 
+
+13) Volatility analysis
+
+Group 4: Generative modeling and AI
+Focus: The intersection of SDEs and deep learning for data and image generation.
+
+14) Training a Neural Net on a Neural Net
+
+15) Flow Matching and Diffusion Models for image generation
+
+16) Image Generation by Diffusion Models: Can AI Reproduce Doctor’s Handwriting?
+
+17) Score-based generative modeling through stochastic Differential Equations
+
+18) Numerical Solvers for Reverse-Time SDEs in Score-Based Generative Models
+
+
+

@@ -2,98 +2,84 @@
   "schedule": [
     {
       "index": 0,
-      "time": "09:00 - 09:30",
+      "time": "08:00 - 08:15",
       "type": "activity",
-      "title": "Opening Ceremony & Welcome",
-      "location": "Main Hall"
+      "title": "Welcome and Opening Remarks"
     },
     {
       "index": 1,
-      "time": "09:30 - 10:30",
-      "type": "talk",
-      "group": 1,
-      "initials": "SC",
-      "title": "Advanced Periodic Boundary Conditions",
-      "abstract": "Exploring modern approaches to simulating particle systems with periodic boundary conditions, including optimizations for GPU computing and strategies for handling long-range interactions efficiently."
-    },
-    {
-      "index": 2,
-      "time": "10:30 - 11:00",
-      "type": "activity",
-      "title": "Coffee Break",
-      "location": "Foyer"
-    },
-    {
-      "index": 3,
       "type": "talk_session",
-      "title": "Parallel Sessions A & B",
+      "title": "Talks 1: Generative Modeling and AI",
+      "session_start": "08:15",
       "talks": [
-        {
-          "time": "11:00 - 12:00",
-          "group": 2,
-          "initials": "MB",
-          "title": "Numerical Stability in Long-Range Interactions",
-          "abstract": "Recent advances in maintaining numerical stability for long-range force calculations in large-scale simulations, with practical implementations and benchmarking results."
-        },
-        {
-          "time": "11:00 - 12:00",
-          "group": 3,
-          "initials": "AR",
-          "title": "Scaling Simulations to Billions of Particles",
-          "abstract": "Techniques for efficient parallelization and memory management when simulating massive particle systems. Learn best practices for distributed computing, load balancing, and performance optimization at exascale."
-        }
+        { "duration": 6, "group": 1, "initials": "", "title": "Training a Neural Net on a Neural Net", "abstract": "Shallow neural network (SNN) can perform similarly to more complex or deeper neural networks (NN) (L. J. Ba, R. Caruana, 2014). The idea is to train a shallow model on the classifications of the more complex model, instead of training it on the original labels of the training set. Training an SNN to identify based on the classification function of the more complex NN, we call this a SNN-MIMIC. <br> <img src = \"images/group1.png\" alt=\"Group 1 poster preview\" style=\"max-width: 100%; height: auto; margin-top: 12px; border-radius: 6px;\">" },
+        { "duration": 6, "group": 2, "initials": "", "title": "Flow Matching and Diffusion Models for Image Generation", "abstract": "<p>The goal is to construct a generative model that transports a standard normal distribution to the data distribution (unknown distribution with known data).<p><strong>Denoising Diffusion:</strong> Given an image, we gradually corrupt it with noise via an SDE. The model learns to predict the clean image behind the noise and uses this to remove the noise incrementally. This is equivalent to learning the reverse SDE of the noising process.</p> <p><strong>Flow Matching:</strong> Given pure Gaussian noise, the model learns a velocity field that generates a stochastic process (via an ODE) taking pure noise to the data distribution.</p>" },
+        { "duration": 6, "group": 3, "initials": "", "title": "Image Generation by Diffusion Models: Can AI Reproduce Doctor's Handwriting?", "abstract": "The aim of this project was to generate images of handwritten digits (MNIST) and clothing items (FashionMNIST), explore the impact of guidance on MNIST image generation, explore the impact of the diffusion coefficient σ on MNIST / FashionMNIST image generation and find a diffusion coefficient σ such that generated handwritten digits seem as though they were written by someone with “sloppy” handwriting.<br> <img src=\"images/group3.png\" alt=\"Group 3 poster preview\" style=\"max-width: 100%; height: auto; margin-top: 12px; border-radius: 6px;\">" },
+        { "duration": 6, "group": 4, "initials": "", "title": "Score-Based Generative Modeling through Stochastic Differential Equations", "abstract": "In this project, we study diffusion-based generative modeling using stochastic differential equations. In particular, we implemented a VP SDE to generate images of birds, and used PC sampling to simulate the reverse process." },
+        { "duration": 6, "group": 5, "initials": "", "title": "Numerical Solvers for Reverse-Time SDEs in Score-Based Generative Models", "abstract": "Score-based generative modeling defines a forward process that maps data to noise. Generation is performed by solving the corresponding reverse-time SDE or probability-flow ODE. We compare three numerical methods for simulating the reverse-time generative dynamics. We evaluated the generation quality using the sliced Wasserstein distance (SWD) between generated samples and reference samples from the true Gaussian mixture. Ultimately, given enough function evaluations, all numerical methods achieve comparable generation quality. The gap between exact and fitted scores reveals that the score approximation error dominates errors from numerical solvers and discretizations.<br><img src=\"images/group5.png\" alt=\"Group 5 poster preview\" style=\"max-width: 100%; height: auto; margin-top: 12px; border-radius: 6px;\">" }
       ]
     },
     {
-      "index": 4,
-      "time": "12:00 - 13:30",
+      "index": 2,
+      "type": "talk_session",
+      "title": "Talks 2: Extensions and Theory",
+      "session_start": "08:45",
+      "talks": [
+        { "duration": 6, "group": 6, "initials": "", "title": "Weak Convergence and Long-Time Accuracy in Brownian Dynamics", "abstract": "Many SDE cases offer opportunities to develop and deploy specialised methods suited to the specific problem. In this paper, authors have furthered our understanding of one such,  non-Markovian method, that offers promising numerical efficiently improvements for certain cases of stochastic gradient systems. We hope further work can test the scheme in more cases and prove more bounds on the constant in the scheme’s O(h2) convergence." },
+        { "duration": 6, "group": 7, "initials": "", "title": "Diffusion Approximation of Levy Processes", "abstract": "One might wonder if there exists a more broad mathematical object similar to a Wiener process, but being neither restricted to having normally distributed stationary increments, nor required to be almost surely continuous. The answer is yes, the Lévy process. A visualization of the difference between the two can be seen below where several paths are simulated for a Wiener process and an example Lévy process.<br><img src=\"images/group7.png\" alt=\"Group 7 poster preview\" style=\"max-width: 100%; height: auto; margin-top: 12px; border-radius: 6px;\">"
+     },
+        { "duration": 6, "group": 8, "initials": "", "title": "Fractional Brownian Motion: Theory and Applications", "abstract": "In filtering, observations may contain noise with memory, so estimating a hidden signal may require information from the whole past. In telecommunications and queueing systems, bursty traffic can persist over time, increasing congestion and buffer requirements.Fractional Brownian motion (fBm) generalizes ordinary Brownian motion by adding memory. That same memory makes the mathematics harder: many Brownian tools must be replaced or modified." },
+        { "duration": 6, "group": 9, "initials": "", "title": "Levy Processes", "abstract": "A classical SDE model is based on Brownian motion, that has two key properties: continuous trajectories and Gaussian increments. It is widely used in physics and finance. Despite its simplicity, Brownian motion fails to capture Jumps (real data exhibit sudden changes), Heavy tails (extreme events are underestimated) and Non-continuous dynamics (many systems are not smooth). Examples include Financial crashes and Network traffic spikes. A key question is: How can we model randomness with both continuous fluctuations and sudden jumps?" }
+      ]
+    },
+    {
+      "index": 3,
+      "time": "9:10 - 10:00",
       "type": "activity",
-      "title": "Lunch",
-      "location": "Dining Area"
+      "title": "Poster session for topics 1 & 2"
+    },
+    {
+      "index": 4,
+      "time": "10:00 - 10:15",
+      "type": "activity",
+      "title": "Break"
     },
     {
       "index": 5,
       "type": "talk_session",
-      "title": "Parallel Sessions C & D",
+      "title": "Talks 3: High-Dimensional PDEs & Optimization",
+      "session_start": "10:15",
       "talks": [
-        {
-          "time": "13:30 - 14:30",
-          "group": 4,
-          "initials": "JK",
-          "title": "Machine Learning for Particle Dynamics Prediction",
-          "abstract": "Novel approaches using neural networks and deep learning to predict particle behavior and accelerate simulations by several orders of magnitude."
-        },
-        {
-          "time": "14:30 - 15:30",
-          "group": 5,
-          "initials": "ML",
-          "title": "Energy Conservation in Molecular Dynamics",
-          "abstract": "Methods for maintaining energy conservation in MD simulations with adaptive timesteps and symplectic integrators for long-term stability."
-        }
+        { "duration": 6, "group": 10, "initials": "", "title": "Overcoming the Curse of Dimensionality: Solving High-Dimensional PDEs via Deep Learning", "abstract": "Many critical real-world problems are naturally formulated as high-dimensional partial differential equations (PDEs): In mathematical Finance, Pricing derivatives on a basket of d assets requires solving a d-dimensional PDE. In Control Theory, the Hamilton–Jacobi–Bellman equation in a game with n agents lives in n · d state dimensions. In physics, the Schrödinger equation for n quantum particles has 3n spatial dimensions. Classical numerical PDE solvers (finite differences, finite elements) require a grid whose size grows exponentially with dimension d — making them hopelessly slow above d ≈ 5. However, deep neural networks can approximate high-dimensional functions without building a grid, by exploiting their compositional structure." },
+        { "duration": 6, "group": 11, "initials": "", "title": "Noise Corrected Langevin Algorithm", "abstract": "Assume we are given a data set sampled from an unknown probability density function (pdf). We wish to learn this function and use it to sample more data. Rather than learning the pdf, it is more common to focus on the score function. The score function is then estimated using a neural network. In this project we choose to use denoising score matching (DSM), introduced by (Vincent 2011). DSM estimates the score function by minimising the mean square error, and avoids computation of the normalisation constant, making it relatively easy to compute. By taking the data x and artificially adding noise, DSM is able to learn the noisy score function. <br><img src=\"images/group11.png\"; alt=\"Group 11 poster preview\" style=\"max-width: 100%; height: auto; margin-top: 12px; border-radius: 6px;\"> " },
+        { "duration": 6, "group": 12, "initials": "", "title": "Mean-Field Neural Networks: Learning Mappings on Wasserstein Space", "abstract": "This paper introduces a cylindrical neural network that projects probability measures into a finite latent space to approximate infinite-dimensional operators. Coupled with a local BSDE algorithm, this architecture efficiently solves stochastic control PDEs on the Wasserstein space, providing an accurate solution that generalizes to any initial distribution." },
+        { "duration": 6, "group": 13, "initials": "", "title": "SGD as a Stochastic Differential Equation", "abstract": "In this project, we analyze Stochastic Gradient Descent (SGD) by modeling its discrete optimization process as a continuous stochastic differential equation (SDE). Li, Tai, and E (JMLR 2019) proved that this correspondence holds quantitatively in the framework of Stochastic Modified Equations (SME), with weak-error rates O(η) and O(η 2) for the first- and second-ordermatched SDEs. We empirically demonstrate this weak convergence for the SGD algorithm and its momentum SGD (MSGD) variant, and further verify the stationary covariance against the continuous Lyapunov equation and locate the critical-damping line in the heavy-ball case. Ultimately, this confirms that discrete, noisy optimization algorithms can be accurately modeled as continuous stochastic differential equations, making the toolkit of SDE analysis available for studying them." }
       ]
     },
     {
       "index": 6,
-      "time": "15:30 - 16:00",
-      "type": "activity",
-      "title": "Coffee Break",
-      "location": "Foyer"
+      "type": "talk_session",
+      "title": "Talks 4: Applications to Biology, Climate & Finance",
+      "session_start": "10:40",
+      "talks": [
+        { "duration": 6, "group": 14,  "initials": "", "title": "Computational Modeling of Disease Spread", "abstract": "Zoonosis is when a disease transfers from animal to human. Salmonella and E.Coli are examples of bacteria which might spread from cattle to human through food. Understanding the transmission routes is important for controlling spread, and mathematical modelling using SDEs allows us to study this. We built an SISe-model and calculated the states over a given time-span. In SIS, unlike SIR, recovering from infection does not give immunity. SISe is the SIS-model but with an environmental compartment, i.e. when infections can be transmitted indirectly by contamination of the local environment.<br><img src=\"images/group14.png\"; alt=\"Group 14 poster preview\" style=\"max-width: 100%; height: auto; margin-top: 12px; border-radius: 6px;\"> " },
+        { "duration": 6, "group": 15, "initials": "", "title": "SDE Infectious Disease Modelling for Malaria", "abstract": "We have compared deterministic (ODE) and stochastic (SDE) models for malaria transmission. Three results stand out: First, When R0 ≫ 1, SDE and ODE agree well on average. Stochastic fluctuations are bounded and the endemic equilibrium is stable. Second, Near R0 = 1, The SDE reveals a fundamental limitation of the ODE. Stochastic extinction is likely even when R0 > 1, a phenomenon completely missed by the deterministic model. This is where stochastic modelling is most critical for public health decisions. Third, the model captures environmental variability: Modelling α(t) as an OU process adds a realistic layer of climate-driven randomness, especially relevant for vector-borne diseases dependent on temperature and rainfall. Integration of a dynamic mosquito population, spatial epidemic models, and parameter estimation from field data remain open directions. <br><img src=\"images/group15.png\"; alt=\"Group 15 poster preview\" style=\"max-width: 100%; height: auto; margin-top: 12px; border-radius: 6px;\"> " },
+        { "duration": 6, "group": 16, "initials": "", "title": "Parameter Estimation of a Stochastic Climate Model", "abstract": "We are interested in how large-scale climate patterns can be simulated using stochastic differential equations (SDEs). In particular, we are interested in reduced, low-order models derived from high-order models or observations. The phenomena that will be studied here is the North Atlantic Oscillation (NAO) which measures fluctuations in atmospheric pressure differences between the Icelandic low and the Azores high, measured continuously by weather stations from 1950 up to the current date. <br> <img src = \"images/group16.png\"; alt=\"Group 16 poster preview\" style=\"max-width: 100%; height: auto; margin-top: 12px; border-radius: 6px;\"> " },
+        { "duration": 6, "group": 17, "initials": "", "title": "Stochastic Resonance in Climatic Change", "abstract": "The surface temperature of the Earth evolves over time, alternating between glacial and interglacial periods with an approximate periodicity of 10,000 years. How can the 10,000-year temperature periodicity in the paleoclimatic records be explained and reproduced? To answer this question, an Energy Balance Model is investigated, combining a small periodic change in the solar variations and stochastic noise corresponding to other natural causes." },
+        { "duration": 6, "group": 18, "initials": "", "title": "Volatility Analysis", "abstract": "In the paper \"Volatility is rough\" [1] the following equation is considered when estimating volatility from recent data. The Hurst parameter H is computed to estimate the  smoothness of the volatility. The equation considered is <br> <center> dY = μdt + σdW,</center><br>where Y is the log-price for a given asset, and σ is the volatility. For our computations, the close price for each day is considered. Data from the market for many different indexes between the years of 2000 to 2018 has been collected from the Oxford-Man Institute of Quantitative Finance.<br><img src=\"images/group18.png\"; alt=\"Group 18 poster preview\" style=\"max-width: 100%; height: auto; margin-top: 12px; border-radius: 6px;\"> " }
+      ]
     },
     {
       "index": 7,
-      "time": "16:00 - 17:00",
-      "type": "talk",
-      "group": 6,
-      "initials": "TP",
-      "title": "Visualization Techniques for Large-Scale Simulations",
-      "abstract": "Advanced visualization strategies for understanding particle dynamics in billion-particle systems using GPU rendering and progressive refinement."
+      "time": "11:1s0 - 11:50",
+      "type": "activity",
+      "title": "Poster Session for topics 3 & 4"
     },
     {
       "index": 8,
-      "time": "17:00 - 18:00",
+      "time": "11:50 - 12:00",
       "type": "activity",
-      "title": "Networking Reception",
-      "location": "Main Hall"
+      "title": "Closing Remarks and Poster Winners Announcement"
     }
   ]
 }
