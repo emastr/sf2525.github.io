@@ -585,6 +585,45 @@
             color: #c4d6e7;
         }
 
+        .scoreboard {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #2d3f57;
+            display: grid;
+            gap: 8px;
+        }
+
+        .scoreboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #e8edf2;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .scoreboard-summary {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 6px;
+            font-size: 0.82rem;
+            color: #c4d6e7;
+        }
+
+        .scoreboard-list {
+            margin: 0;
+            padding-left: 20px;
+            color: #d7e6f5;
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        .score-status {
+            font-size: 0.8rem;
+            color: #9cc8ee;
+            min-height: 1.2em;
+        }
+
         .buttons {
             display: flex;
             gap: 8px;
@@ -780,6 +819,20 @@
                                 <div>Angular velocity omega: <span id="omegaStat">0.000</span> rad/s</div>
                                 <div>Angle error (to pi): <span id="errorStat">0.000</span> rad</div>
                                 <div>Control torque u: <span id="torqueStat">0.000</span></div>
+                            </div>
+
+                            <div class="scoreboard">
+                                <div class="scoreboard-header">
+                                    <span>Persistent Scoreboard</span>
+                                    <button id="clearScoresBtn" class="secondary" type="button">Clear Scores</button>
+                                </div>
+                                <div class="scoreboard-summary">
+                                    <div>Runs: <span id="scoreRuns">0</span></div>
+                                    <div>Best: <span id="bestTimeStat">-</span></div>
+                                    <div>Last: <span id="lastTimeStat">-</span></div>
+                                </div>
+                                <ol id="scoreboardList" class="scoreboard-list"></ol>
+                                <div id="scoreStatus" class="score-status">Fill the bin to save a score.</div>
                             </div>
                         </div>
 
@@ -1205,6 +1258,19 @@
             const runBtn = document.getElementById("runBtn");
             const pauseBtn = document.getElementById("pauseBtn");
             const resetBtn = document.getElementById("resetBtn");
+            const clearScoresBtn = document.getElementById("clearScoresBtn");
+
+            const SCORE_STORAGE_KEY = "pidPendulumScores";
+            const SCORE_COOKIE_KEY = "pidPendulumScores";
+            const MAX_SCORES_SHOWN = 10;
+
+            const scoreUi = {
+                runs: document.getElementById("scoreRuns"),
+                best: document.getElementById("bestTimeStat"),
+                last: document.getElementById("lastTimeStat"),
+                list: document.getElementById("scoreboardList"),
+                status: document.getElementById("scoreStatus")
+            };
 
             let running = false;
             let t = 0;
@@ -1259,6 +1325,8 @@
             let binRedParticleCount = 0;
             let binFillLevel = 0;
             let binFull = false;
+            let scoreCommitted = false;
+            let savedScores = loadScores();
 
             function worldToScreenX(worldX) {
                 return worldX - cartPosition + canvas.width * 0.5;
@@ -1291,6 +1359,134 @@
                 labels.kd.textContent = Number(inputs.kd.value).toFixed(2);
                 labels.spawnRate.textContent = Number(inputs.spawnRate.value).toFixed(0);
                 labels.constantForce.textContent = Number(inputs.constantForce.value).toFixed(2);
+            }
+
+            function setCookie(name, value, days) {
+                const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+                document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
+            }
+
+            function getCookie(name) {
+                const parts = document.cookie.split(";").map((part) => part.trim());
+                const match = parts.find((part) => part.startsWith(`${name}=`));
+                if (!match) {
+                    return null;
+                }
+                return decodeURIComponent(match.slice(name.length + 1));
+            }
+
+            function normalizeScores(value) {
+                if (!Array.isArray(value)) {
+                    return [];
+                }
+                return value
+                    .map((n) => Number(n))
+                    .filter((n) => Number.isFinite(n) && n > 0);
+            }
+
+            function loadScores() {
+                try {
+                    const raw = localStorage.getItem(SCORE_STORAGE_KEY);
+                    if (raw) {
+                        const parsed = JSON.parse(raw);
+                        return normalizeScores(parsed);
+                    }
+                } catch (error) {
+                    console.warn("Unable to load scores from localStorage:", error);
+                }
+
+                try {
+                    const cookieRaw = getCookie(SCORE_COOKIE_KEY);
+                    if (cookieRaw) {
+                        const parsed = JSON.parse(cookieRaw);
+                        return normalizeScores(parsed);
+                    }
+                } catch (error) {
+                    console.warn("Unable to load scores from cookies:", error);
+                }
+
+                return [];
+            }
+
+            function persistScores() {
+                const encoded = JSON.stringify(savedScores);
+                let persisted = false;
+
+                try {
+                    localStorage.setItem(SCORE_STORAGE_KEY, encoded);
+                    persisted = true;
+                } catch (error) {
+                    console.warn("Unable to persist scores to localStorage:", error);
+                }
+
+                try {
+                    setCookie(SCORE_COOKIE_KEY, encoded, 365);
+                    persisted = true;
+                } catch (error) {
+                    console.warn("Unable to persist scores to cookies:", error);
+                }
+
+                if (!persisted && scoreUi.status) {
+                    scoreUi.status.textContent = "Score saved for this session only.";
+                }
+            }
+
+            function formatSeconds(seconds) {
+                return `${seconds.toFixed(2)}s`;
+            }
+
+            function renderScoreboard() {
+                const runs = savedScores.length;
+                const bestTime = runs > 0 ? Math.min(...savedScores) : null;
+                const lastTime = runs > 0 ? savedScores[runs - 1] : null;
+
+                scoreUi.runs.textContent = String(runs);
+                scoreUi.best.textContent = bestTime === null ? "-" : formatSeconds(bestTime);
+                scoreUi.last.textContent = lastTime === null ? "-" : formatSeconds(lastTime);
+
+                scoreUi.list.innerHTML = "";
+                const ranked = [...savedScores].sort((a, b) => a - b).slice(0, MAX_SCORES_SHOWN);
+                if (ranked.length === 0) {
+                    const li = document.createElement("li");
+                    li.textContent = "No completed runs yet.";
+                    scoreUi.list.appendChild(li);
+                    return;
+                }
+
+                for (const score of ranked) {
+                    const li = document.createElement("li");
+                    li.textContent = formatSeconds(score);
+                    scoreUi.list.appendChild(li);
+                }
+            }
+
+            function saveCompletedRun(seconds) {
+                if (!Number.isFinite(seconds) || seconds <= 0) {
+                    return;
+                }
+                savedScores.push(Number(seconds.toFixed(3)));
+                persistScores();
+                renderScoreboard();
+            }
+
+            function completeRunIfNeeded() {
+                if (scoreCommitted || !binFull) {
+                    return;
+                }
+
+                scoreCommitted = true;
+                running = false;
+                runBtn.textContent = "Finished";
+                saveCompletedRun(t);
+                scoreUi.status.textContent = `Run complete: ${formatSeconds(t)} saved.`;
+            }
+
+            function syncCompletionState() {
+                if (binFillLevel >= 0.9999) {
+                    binFillLevel = 1.0;
+                    binFull = true;
+                }
+                completeRunIfNeeded();
             }
 
             function getCartScreenRect() {
@@ -1415,6 +1611,7 @@
                             binFillLevel = Math.min(1.0, binFillLevel + 0.0001);
                             if (binFillLevel >= 1.0) {
                                 binFull = true;
+                                completeRunIfNeeded();
                             }
                         }
                     }
@@ -1433,6 +1630,8 @@
                         particles.splice(i, 1);
                     }
                 }
+
+                syncCompletionState();
             }
 
             function drawParticles() {
@@ -1506,9 +1705,11 @@
                 binRedParticleCount = 0;
                 binFillLevel = 0;
                 binFull = false;
+                scoreCommitted = false;
                 bobTrace = [];
                 running = false;
                 runBtn.textContent = "Start";
+                scoreUi.status.textContent = "Fill the bin to save a score.";
                 updateStats();
                 drawPendulum();
             }
@@ -1757,6 +1958,18 @@
                 ctx.textAlign = "left";
                 ctx.fillText(timerText, binX + 5, 18);
                 ctx.textAlign = "left";
+
+                if (binFull) {
+                    const overlayText = "RUN COMPLETE";
+                    ctx.save();
+                    ctx.textAlign = "center";
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.45)";
+                    ctx.fillRect(w * 0.5 - 150, 16, 300, 40);
+                    ctx.font = "bold 22px Segoe UI";
+                    ctx.fillStyle = "#ffd66b";
+                    ctx.fillText(overlayText, w * 0.5, 44);
+                    ctx.restore();
+                }
             }
 
             function animate() {
@@ -1767,6 +1980,7 @@
                 const frameDt = Math.min(0.05, (now - lastFrameTime) / 1000);
                 lastFrameTime = now;
                 updateParticles(frameDt);
+                syncCompletionState();
 
                 if (running) {
                     for (let i = 0; i < 3; i++) {
@@ -1786,18 +2000,41 @@
             });
 
             runBtn.addEventListener("click", () => {
+                if (binFull) {
+                    scoreUi.status.textContent = "Run already completed. Press Reset for a new run.";
+                    return;
+                }
                 running = true;
                 runBtn.textContent = "Running";
+                if (!scoreCommitted) {
+                    scoreUi.status.textContent = "Simulation running...";
+                }
             });
 
             pauseBtn.addEventListener("click", () => {
                 running = false;
                 runBtn.textContent = "Resume";
+                if (!binFull) {
+                    scoreUi.status.textContent = "Simulation paused.";
+                }
             });
 
             resetBtn.addEventListener("click", resetSimulation);
 
+            clearScoresBtn.addEventListener("click", () => {
+                savedScores = [];
+                try {
+                    localStorage.removeItem(SCORE_STORAGE_KEY);
+                } catch (error) {
+                    console.warn("Unable to clear localStorage scores:", error);
+                }
+                setCookie(SCORE_COOKIE_KEY, "[]", -1);
+                renderScoreboard();
+                scoreUi.status.textContent = "Saved scores cleared.";
+            });
+
             refreshValueLabels();
+            renderScoreboard();
             resetSimulation();
             animate();
         }
