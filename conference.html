@@ -746,25 +746,25 @@
                             <label class="control-row" for="kpSlider">
                                 <span>P (Proportional)</span>
                                 <strong id="kpValue">0.00</strong>
-                                <input id="kpSlider" type="range" min="0" max="8" step="0.1" value="5">
+                                <input id="kpSlider" type="range" min="0" max="10" step="0.1" value="0">
                             </label>
 
                             <label class="control-row" for="kiSlider">
                                 <span>I (Integral)</span>
                                 <strong id="kiValue">0.00</strong>
-                                <input id="kiSlider" type="range" min="0" max="1" step="0.05" value="0">
+                                <input id="kiSlider" type="range" min="0" max="1" step="0.01" value="0">
                             </label>
 
                             <label class="control-row" for="kdSlider">
                                 <span>D (Derivative)</span>
                                 <strong id="kdValue">0.00</strong>
-                                <input id="kdSlider" type="range" min="0" max="0.2" step="0.002" value="0.01">
+                                <input id="kdSlider" type="range" min="0" max="0.5" step="0.002" value="0.0">
                             </label>
 
                             <label class="control-row" for="spawnRateSlider">
                                 <span>Particle Spawn Rate (1/s)</span>
                                 <strong id="spawnRateValue">30</strong>
-                                <input id="spawnRateSlider" type="range" min="0" max="280" step="1" value="30">
+                                <input id="spawnRateSlider" type="range" min="0" max="280" step="1" value="1">
                             </label>
 
 
@@ -1412,7 +1412,7 @@
                         if (hitBin) {
                             binBrightness = Math.min(1.0, binBrightness + 0.3);
                             binRedParticleCount += 1;
-                            binFillLevel = Math.min(1.0, binFillLevel + 0.001);
+                            binFillLevel = Math.min(1.0, binFillLevel + 0.0001);
                             if (binFillLevel >= 1.0) {
                                 binFull = true;
                             }
