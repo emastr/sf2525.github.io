@@ -517,6 +517,144 @@
                 font-size: 0.9rem;
             }
         }
+
+        /* PID Simulation Styles */
+        .pid-box {
+            background: rgba(14, 21, 32, 0.92);
+            border: 1px solid #33465f;
+            border-radius: 12px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+            overflow: hidden;
+        }
+
+        .pid-header {
+            padding: 16px 20px;
+            background: linear-gradient(90deg, #1f3652, #2b4a6f);
+            border-bottom: 1px solid #3f5f86;
+        }
+
+        .pid-header h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: #e8edf2;
+        }
+
+        .pid-main {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 18px;
+            padding: 18px;
+        }
+
+        .controls {
+            background: #151f2d;
+            border: 1px solid #2f425a;
+            border-radius: 10px;
+            padding: 14px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .control-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+            align-items: center;
+            font-size: 0.92rem;
+            color: #e8edf2;
+        }
+
+        .control-row input[type="range"] {
+            grid-column: 1 / 3;
+            width: 100%;
+            accent-color: #57b8ff;
+        }
+
+        .control-row strong {
+            color: #57b8ff;
+        }
+
+        .stats {
+            margin-top: 8px;
+            padding-top: 10px;
+            border-top: 1px solid #2d3f57;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            color: #c4d6e7;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+
+        .pid-box button {
+            border: 1px solid #4d6f97;
+            background: #24496d;
+            color: #edf6ff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .pid-box button:hover {
+            background: #2d5b86;
+        }
+
+        .pid-box button.secondary {
+            background: #2b3240;
+            border-color: #4c586d;
+        }
+
+        .pid-box button.secondary:hover {
+            background: #39445a;
+        }
+
+        .plot-wrap {
+            background: #0f1723;
+            border: 1px solid #2a3b53;
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        #pidCanvas {
+            width: 100%;
+            height: 380px;
+            display: block;
+            border-radius: 8px;
+            background: #0a111a;
+        }
+
+        .legend {
+            margin-top: 8px;
+            font-size: 0.82rem;
+            color: #b9cadb;
+            display: flex;
+            gap: 14px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        @media (max-width: 860px) {
+            .pid-main {
+                grid-template-columns: 1fr;
+            }
+
+            #pidCanvas {
+                height: 320px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -582,6 +720,80 @@
                 <tbody id="scheduleTableBody">
                 </tbody>
             </table>
+        </section>
+
+        <!-- PID Simulation Section -->
+        <section id="simulation" class="section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 class="section-title" style="margin: 0; padding: 0; border: none;">Interactive PID Pendulum Simulation</h2>
+                <button id="simulationToggleBtn" style="padding: 10px 20px; background: #0b2e59; color: #ffffff; border: 1px solid #08203d; border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: 500;">Show</button>
+            </div>
+            <div id="simulationContainer" style="display: none; background: rgba(14, 21, 32, 0.92); border-radius: 8px; padding: 18px; margin-top: 20px;">
+                <section class="pid-box" aria-label="PID pendulum simulation box" style="background: transparent; border: none; box-shadow: none; overflow: visible; margin: 0; padding: 0;">
+                    <header class="pid-header">
+                        <h3>Inverted Stochastic Pendulum with PID control</h3>
+                    </header>
+
+                    <div class="pid-main">
+                        <div class="controls">
+
+                            <label class="control-row" for="constantForceSlider">
+                                <span>C (Constant)</span>
+                                <strong id="constantForceValue">0.00</strong>
+                                <input id="constantForceSlider" type="range" min="-8" max="20" step="0.1" value="0">
+                            </label>
+
+                            <label class="control-row" for="kpSlider">
+                                <span>P (Proportional)</span>
+                                <strong id="kpValue">0.00</strong>
+                                <input id="kpSlider" type="range" min="0" max="8" step="0.1" value="5">
+                            </label>
+
+                            <label class="control-row" for="kiSlider">
+                                <span>I (Integral)</span>
+                                <strong id="kiValue">0.00</strong>
+                                <input id="kiSlider" type="range" min="0" max="1" step="0.05" value="0">
+                            </label>
+
+                            <label class="control-row" for="kdSlider">
+                                <span>D (Derivative)</span>
+                                <strong id="kdValue">0.00</strong>
+                                <input id="kdSlider" type="range" min="0" max="0.2" step="0.002" value="0.01">
+                            </label>
+
+                            <label class="control-row" for="spawnRateSlider">
+                                <span>Particle Spawn Rate (1/s)</span>
+                                <strong id="spawnRateValue">30</strong>
+                                <input id="spawnRateSlider" type="range" min="0" max="280" step="1" value="30">
+                            </label>
+
+
+                            <div class="buttons">
+                                <button id="runBtn" type="button">Start</button>
+                                <button id="pauseBtn" class="secondary" type="button">Pause</button>
+                                <button id="resetBtn" class="secondary" type="button">Reset</button>
+                            </div>
+
+                            <div class="stats">
+                                <div>Time: <span id="timeStat">0.00</span>s</div>
+                                <div>Angle theta: <span id="thetaStat">0.000</span> rad</div>
+                                <div>Angular velocity omega: <span id="omegaStat">0.000</span> rad/s</div>
+                                <div>Angle error (to pi): <span id="errorStat">0.000</span> rad</div>
+                                <div>Control torque u: <span id="torqueStat">0.000</span></div>
+                            </div>
+                        </div>
+
+                        <div class="plot-wrap">
+                            <canvas id="pidCanvas" width="900" height="500"></canvas>
+                            <div class="legend">
+                                <span><i class="dot" style="background:#6fc1ff"></i>Bob trajectory (recent)</span>
+                                <span><i class="dot" style="background:#ff4d4d"></i>Collection bin</span>
+                                <span><i class="dot" style="background:#9cb4cb"></i>Pendulum rod/bob</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </section>
 
     </div>
@@ -942,6 +1154,653 @@
 
         // Load schedule on page load
         document.addEventListener('DOMContentLoaded', loadSchedule);
+
+        // PID Simulation Toggle
+        const simulationToggleBtn = document.getElementById('simulationToggleBtn');
+        const simulationContainer = document.getElementById('simulationContainer');
+        let simulationInitialized = false;
+
+        simulationToggleBtn.addEventListener('click', function() {
+            if (simulationContainer.style.display === 'none') {
+                simulationContainer.style.display = 'block';
+                simulationToggleBtn.textContent = 'Hide';
+                if (!simulationInitialized) {
+                    initializePIDSimulation();
+                    simulationInitialized = true;
+                }
+            } else {
+                simulationContainer.style.display = 'none';
+                simulationToggleBtn.textContent = 'Show';
+            }
+        });
+
+        // PID Simulation Initialization
+        function initializePIDSimulation() {
+            const canvas = document.getElementById("pidCanvas");
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext("2d");
+
+            const inputs = {
+                kp: document.getElementById("kpSlider"),
+                ki: document.getElementById("kiSlider"),
+                kd: document.getElementById("kdSlider"),
+                spawnRate: document.getElementById("spawnRateSlider"),
+                constantForce: document.getElementById("constantForceSlider")
+            };
+
+            const labels = {
+                kp: document.getElementById("kpValue"),
+                ki: document.getElementById("kiValue"),
+                kd: document.getElementById("kdValue"),
+                spawnRate: document.getElementById("spawnRateValue"),
+                constantForce: document.getElementById("constantForceValue"),
+                time: document.getElementById("timeStat"),
+                theta: document.getElementById("thetaStat"),
+                omega: document.getElementById("omegaStat"),
+                error: document.getElementById("errorStat"),
+                torque: document.getElementById("torqueStat")
+            };
+
+            const runBtn = document.getElementById("runBtn");
+            const pauseBtn = document.getElementById("pauseBtn");
+            const resetBtn = document.getElementById("resetBtn");
+
+            let running = false;
+            let t = 0;
+            let theta = 3.1;
+            let omega = 0;
+            let integral = 0;
+            let prevError = 0;
+            let controlStepCount = 0;
+            let controlForce = 0;
+            let bobTrace = [];
+            const dt = 0.005;
+            const g = 9.81;
+            const L = 1.0;
+            const mass = 1.0;
+            const damping = 0.1;
+            const inertia = mass * L * L;
+            const setpoint = 0;
+            const traceMaxLength = 500;
+            const controlDelaySteps = 2;
+            const integralMemoryHalfLife = 0.5;
+            const integralDecayPerStep = Math.pow(0.5, dt / integralMemoryHalfLife);
+
+            const cartMass = 0.00;
+            const pendulumMass = 0.2;
+            const pendulumLength = 0.6;
+            const cartDamping = 0.02;
+            const pendulumInertia = 0.006;
+            const cartWidth = 130;
+            const cartHeight = 64;
+            const wheelRadius = 12;
+            const pivotOffsetAboveCart = 12;
+            const initialCartVelocity = 200;
+            let cartPosition = canvas.width * 0.5;
+            let cartVelocity = initialCartVelocity;
+            let cartAcceleration = 0;
+            let particles = [];
+            let spawnAccumulator = 0;
+            let lastFrameTime = null;
+            let particleImpactForce = 0;
+            const particleImpactVariance = 0.3;
+            const particleImpactSigma = Math.sqrt(particleImpactVariance);
+            const impactForceHalfLife = 0.12;
+            const impactForceDecayPerStep = Math.pow(0.5, dt / impactForceHalfLife);
+            const cartHitFlashDuration = 0.22;
+            const cartHitExpandFactor = 2.8;
+            const forceArrowScale = 50.0;
+            const binX = 20;
+            const binWidth = 70;
+            const binHeight = 30;
+            const binBrightnessDecayPerSecond = 2.0;
+            let binBrightness = 0;
+            let binRedParticleCount = 0;
+            let binFillLevel = 0;
+            let binFull = false;
+
+            function worldToScreenX(worldX) {
+                return worldX - cartPosition + canvas.width * 0.5;
+            }
+
+            function readParams() {
+                return {
+                    kp: Number(inputs.kp.value),
+                    ki: Number(inputs.ki.value),
+                    kd: Number(inputs.kd.value),
+                    theta0: 3.1,
+                    constantForce: Number(inputs.constantForce.value)
+                };
+            }
+
+            function wrapToPi(angle) {
+                const TWO_PI = 2 * Math.PI;
+                let wrapped = angle % TWO_PI;
+                if (wrapped > Math.PI) {
+                    wrapped -= TWO_PI;
+                } else if (wrapped <= -Math.PI) {
+                    wrapped += TWO_PI;
+                }
+                return wrapped;
+            }
+
+            function refreshValueLabels() {
+                labels.kp.textContent = Number(inputs.kp.value).toFixed(2);
+                labels.ki.textContent = Number(inputs.ki.value).toFixed(2);
+                labels.kd.textContent = Number(inputs.kd.value).toFixed(2);
+                labels.spawnRate.textContent = Number(inputs.spawnRate.value).toFixed(0);
+                labels.constantForce.textContent = Number(inputs.constantForce.value).toFixed(2);
+            }
+
+            function getCartScreenRect() {
+                const pivotX = worldToScreenX(cartPosition);
+                const groundY = canvas.height * 0.84;
+                const cartTopY = groundY - 2 * wheelRadius - cartHeight;
+                return {
+                    left: pivotX - cartWidth / 2,
+                    right: pivotX + cartWidth / 2,
+                    top: cartTopY,
+                    bottom: cartTopY + cartHeight,
+                    pivotX,
+                    groundY,
+                    cartTopY
+                };
+            }
+
+            function getPendulumScreenGeometry() {
+                const groundY = canvas.height * 0.84;
+                const cartTopY = groundY - 2 * wheelRadius - cartHeight;
+                const pivotY = cartTopY - pivotOffsetAboveCart;
+                const rodLengthPx = Math.min(canvas.width, canvas.height) * 0.3;
+                const pivotX = worldToScreenX(cartPosition);
+                const bobX = pivotX + rodLengthPx * Math.sin(theta);
+                const bobY = pivotY - rodLengthPx * Math.cos(theta);
+                return { pivotX, pivotY, bobX, bobY };
+            }
+
+            function pointToSegmentDistance(px, py, x1, y1, x2, y2) {
+                const dx = x2 - x1;
+                const dy = y2 - y1;
+                const lenSq = dx * dx + dy * dy;
+                if (lenSq === 0) {
+                    return Math.hypot(px - x1, py - y1);
+                }
+                const t = Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / lenSq));
+                const projX = x1 + t * dx;
+                const projY = y1 + t * dy;
+                return Math.hypot(px - projX, py - projY);
+            }
+
+            function spawnParticle() {
+                const radius = 2 + Math.random() * 2.5;
+                const yMax = canvas.height * 0.84 - radius;
+                particles.push({
+                    x: canvas.width + radius + Math.random() * 24,
+                    y: radius + Math.random() * Math.max(1, yMax - radius),
+                    vx: -(80 + Math.random() * 170),
+                    vy: (Math.random() - 0.5) * 20,
+                    baseRadius: radius,
+                    radius,
+                    hitPendulum: false,
+                    impactAge: null,
+                    impactForce: 0
+                });
+            }
+
+            function gaussianRandom(mean, sigma) {
+                const u1 = Math.max(1e-12, Math.random());
+                const u2 = Math.random();
+                const z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+                return mean + sigma * z0;
+            }
+
+            function updateParticles(frameDt) {
+                const spawnRate = Number(inputs.spawnRate.value);
+                spawnAccumulator += spawnRate * frameDt;
+                while (spawnAccumulator >= 1) {
+                    spawnParticle();
+                    spawnAccumulator -= 1;
+                }
+
+                binBrightness = Math.max(0, binBrightness - binBrightnessDecayPerSecond * frameDt);
+
+                const cartRect = getCartScreenRect();
+                const pendulum = getPendulumScreenGeometry();
+                const topBallRadius = 13;
+                const binBoundingBox = {
+                    left: binX,
+                    right: binX + binWidth,
+                    top: pendulum.pivotY - Math.min(canvas.width, canvas.height) * 0.3 - 15,
+                    bottom: pendulum.pivotY - Math.min(canvas.width, canvas.height) * 0.3 + 15
+                };
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    if (p.impactAge !== null) {
+                        p.impactAge += frameDt;
+                        if (p.impactAge >= cartHitFlashDuration) {
+                            particles.splice(i, 1);
+                        }
+                        continue;
+                    }
+
+                    p.x += p.vx * frameDt;
+                    p.y += p.vy * frameDt;
+
+                    const hitCart =
+                        p.x + p.radius >= cartRect.left &&
+                        p.x - p.radius <= cartRect.right &&
+                        p.y + p.radius >= cartRect.top &&
+                        p.y - p.radius <= cartRect.bottom;
+
+                    const outOfBounds =
+                        p.x + p.radius < 0 ||
+                        p.y + p.radius < 0 ||
+                        p.y - p.radius > canvas.height;
+
+                    const hitTopBall = Math.hypot(p.x - pendulum.bobX, p.y - pendulum.bobY) <= p.radius + topBallRadius;
+                    if (hitTopBall) {
+                        p.hitPendulum = true;
+                    }
+
+                    if (p.hitPendulum) {
+                        const hitBin =
+                            p.x + p.radius >= binBoundingBox.left &&
+                            p.x - p.radius <= binBoundingBox.right &&
+                            p.y + p.radius >= binBoundingBox.top &&
+                            p.y - p.radius <= binBoundingBox.bottom;
+                        if (hitBin) {
+                            binBrightness = Math.min(1.0, binBrightness + 0.3);
+                            binRedParticleCount += 1;
+                            binFillLevel = Math.min(1.0, binFillLevel + 0.001);
+                            if (binFillLevel >= 1.0) {
+                                binFull = true;
+                            }
+                        }
+                    }
+
+                    if (hitCart) {
+                        const impactSample = -Math.abs(gaussianRandom(0, particleImpactSigma));
+                        particleImpactForce += impactSample;
+                        p.impactAge = 0;
+                        p.impactForce = impactSample;
+                        p.vx = 0;
+                        p.vy = 0;
+                        continue;
+                    }
+
+                    if (outOfBounds) {
+                        particles.splice(i, 1);
+                    }
+                }
+            }
+
+            function drawParticles() {
+                for (const p of particles) {
+                    if (p.impactAge !== null) {
+                        const life = Math.min(1, p.impactAge / cartHitFlashDuration);
+                        const effectRadius = p.baseRadius * (1 + (cartHitExpandFactor - 1) * life);
+                        const alpha = 1 - life;
+
+                        ctx.save();
+                        ctx.shadowColor = "rgba(255, 77, 77, 0.95)";
+                        ctx.shadowBlur = 20 + 18 * alpha;
+                        ctx.fillStyle = `rgba(255, 77, 77, ${alpha.toFixed(3)})`;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, effectRadius, 0, 2 * Math.PI);
+                        ctx.fill();
+
+                        const maxArrowLen = 90;
+                        const arrowLen = Math.min(maxArrowLen, Math.abs(p.impactForce) * forceArrowScale);
+                        if (arrowLen > 1) {
+                            const dir = Math.sign(p.impactForce) || 1;
+                            const startX = p.x;
+                            const startY = p.y;
+                            const endX = startX + dir * arrowLen;
+                            const endY = startY;
+
+                            ctx.strokeStyle = `rgba(255, 110, 110, ${alpha.toFixed(3)})`;
+                            ctx.fillStyle = `rgba(255, 110, 110, ${alpha.toFixed(3)})`;
+                            ctx.lineWidth = 2.5;
+                            ctx.beginPath();
+                            ctx.moveTo(startX, startY);
+                            ctx.lineTo(endX, endY);
+                            ctx.stroke();
+
+                            const head = 7;
+                            ctx.beginPath();
+                            ctx.moveTo(endX, endY);
+                            ctx.lineTo(endX - dir * head, endY - head * 0.7);
+                            ctx.lineTo(endX - dir * head, endY + head * 0.7);
+                            ctx.closePath();
+                            ctx.fill();
+                        }
+
+                        ctx.restore();
+                        continue;
+                    }
+
+                    ctx.fillStyle = p.hitPendulum ? "#ff4d4d" : "#9cb4cb";
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+            }
+
+            function resetSimulation() {
+                t = 0;
+                theta = 3.1;
+                omega = 0;
+                integral = 0;
+                prevError = 0;
+                controlStepCount = 0;
+                controlForce = 0;
+                cartPosition = canvas.width * 0.5;
+                cartVelocity = initialCartVelocity;
+                cartAcceleration = 0;
+                particles = [];
+                spawnAccumulator = 0;
+                lastFrameTime = null;
+                particleImpactForce = 0;
+                binBrightness = 0;
+                binRedParticleCount = 0;
+                binFillLevel = 0;
+                binFull = false;
+                bobTrace = [];
+                running = false;
+                runBtn.textContent = "Start";
+                updateStats();
+                drawPendulum();
+            }
+
+            function updateStats() {
+                const error = wrapToPi(setpoint - theta);
+                labels.time.textContent = t.toFixed(2);
+                labels.theta.textContent = theta.toFixed(3);
+                labels.omega.textContent = omega.toFixed(3);
+                labels.error.textContent = error.toFixed(3);
+                labels.torque.textContent = controlForce.toFixed(3);
+            }
+
+            function simulateStep() {
+                const { kp, ki, kd, constantForce } = readParams();
+                const error = wrapToPi(setpoint - theta);
+                const controllerActive = controlStepCount >= controlDelaySteps;
+                const sinTheta = Math.sin(theta);
+                const cosTheta = Math.cos(theta);
+
+                if (controllerActive) {
+                    integral *= integralDecayPerStep;
+                    integral += error * dt;
+                    const rightLeft = Math.sign(sinTheta)
+                    const topDown = Math.sign(cosTheta)
+                    controlForce = (
+                        - kp * topDown * error 
+                        - ki * topDown * integral 
+                        + kd * topDown * omega
+                    );
+                } else {
+                    controlForce = 0;
+                    prevTheta = theta;
+                }
+
+                const appliedForce = controlForce + particleImpactForce + constantForce;
+                const commonFactor = pendulumMass * pendulumLength * cosTheta;
+                const totalInertia = (
+                    pendulumInertia + 
+                    pendulumMass * Math.pow(pendulumLength, 2)
+                );
+                const commonDenom = (
+                    totalInertia * (cartMass + pendulumMass) 
+                    - Math.pow(pendulumMass * pendulumLength * cosTheta, 2)
+                );
+
+                thetaAcc = (
+                    pendulumMass * g * pendulumLength * sinTheta * (
+                        cartMass + pendulumMass
+                        ) 
+                    - pendulumMass * pendulumLength * cosTheta * (
+                        appliedForce + 
+                        pendulumMass * pendulumLength * Math.pow(omega, 2) * sinTheta
+                        )
+                )/commonDenom;
+
+                cartAcceleration = (
+                    appliedForce 
+                    + pendulumMass * pendulumLength * Math.pow(omega, 2) * sinTheta 
+                    - pendulumMass * pendulumLength * cosTheta * thetaAcc
+                    ) / (cartMass + pendulumMass);
+
+                particleImpactForce *= impactForceDecayPerStep;
+
+                cartVelocity += cartAcceleration * dt;
+                cartPosition += cartVelocity * dt;
+
+                prevTheta = theta;
+                omega += thetaAcc * dt;
+                theta += omega * dt;
+                theta = wrapToPi(theta);
+
+                controlStepCount += 1;
+                if (!binFull) {
+                    t += dt;
+                }
+
+                const wheelRadius = 12;
+                const pivotX = cartPosition;
+                const groundY = canvas.height * 0.84;
+                const cartTopY = groundY - cartHeight - 2*wheelRadius;
+                const pivotY = cartTopY - pivotOffsetAboveCart;
+                const rodLengthPx = Math.min(canvas.width, canvas.height) * 0.3;
+                const bobX = pivotX + rodLengthPx * Math.sin(theta);
+                const bobY = pivotY - rodLengthPx * Math.cos(theta);
+
+                bobTrace.push({ x: bobX, y: bobY });
+                if (bobTrace.length > traceMaxLength) {
+                    bobTrace.shift();
+                }
+
+                updateStats();
+            }
+
+            function drawGrid() {
+                const w = canvas.width;
+                const h = canvas.height;
+                ctx.strokeStyle = "#253446";
+                ctx.lineWidth = 1;
+
+                for (let i = 0; i <= 10; i++) {
+                    const x = (i / 10) * w;
+                    const yLine = (i / 10) * h;
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, h);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(0, yLine);
+                    ctx.lineTo(w, yLine);
+                    ctx.stroke();
+                }
+            }
+
+            function drawPendulum() {
+                const w = canvas.width;
+                const h = canvas.height;
+                ctx.clearRect(0, 0, w, h);
+                ctx.fillStyle = "#0a111a";
+                ctx.fillRect(0, 0, w, h);
+                drawGrid();
+
+                const wheelRadius = 12;
+                const pivotXWorld = cartPosition;
+                const groundY = h * 0.84;
+                const cartTopY = groundY - 2*wheelRadius - cartHeight;
+                const pivotY = cartTopY - pivotOffsetAboveCart;
+                const rodLengthPx = Math.min(w, h) * 0.3;
+                const pivotX = worldToScreenX(pivotXWorld);
+
+                const targetX = pivotX + rodLengthPx * Math.sin(setpoint);
+                const targetY = pivotY - rodLengthPx * Math.cos(setpoint);
+                const bobX = pivotX + rodLengthPx * Math.sin(theta);
+                const bobY = pivotY - rodLengthPx * Math.cos(theta);
+
+                ctx.strokeStyle = "#6c757d";
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(0, groundY);
+                ctx.lineTo(w, groundY);
+                ctx.stroke();
+
+                const binMaxY = pivotY - rodLengthPx;
+                const binCenterY = binMaxY;
+                const binTop = 20;
+                const binBottom = binCenterY + binHeight / 2;
+                const extendedBinHeight = binBottom - binTop;
+                
+                const bgRed = Math.round(60 + binBrightness * 40);
+                ctx.fillStyle = `rgb(${bgRed}, 30, 30)`;
+                ctx.fillRect(binX, binTop, binWidth, extendedBinHeight);
+                
+                const fillHeight = extendedBinHeight * binFillLevel;
+                const fillRed = Math.round(180 + binBrightness * 75);
+                ctx.fillStyle = `rgb(${fillRed}, 50, 50)`;
+                ctx.fillRect(binX, binBottom - fillHeight, binWidth, fillHeight);
+                
+                const borderRed = Math.round(200 + binBrightness * 55);
+                ctx.strokeStyle = `rgb(${borderRed}, 80, 80)`;
+                ctx.lineWidth = 2;
+                ctx.strokeRect(binX, binTop, binWidth, extendedBinHeight);
+
+                ctx.strokeStyle = "#9cb4cb";
+                ctx.lineWidth = 3;
+                ctx.strokeRect(pivotX - cartWidth / 2, cartTopY, cartWidth, cartHeight);
+
+                const leftWheelX = pivotX - cartWidth / 3;
+                const rightWheelX = pivotX + cartWidth / 3;
+                const wheelY = cartTopY + cartHeight + wheelRadius;
+
+                ctx.strokeStyle = "#9cb4cb";
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.arc(leftWheelX, wheelY, wheelRadius, 0, 2 * Math.PI);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(rightWheelX, wheelY, wheelRadius, 0, 2 * Math.PI);
+                ctx.stroke();
+
+                const maxArrowLen = 90;
+                const arrowLen = Math.min(maxArrowLen, Math.abs(controlForce) * forceArrowScale);
+                if (arrowLen > 1) {
+                    const dir = Math.sign(controlForce);
+                    const startX = pivotX;
+                    const startY = cartTopY - 16;
+                    const endX = startX + dir * arrowLen;
+                    const endY = startY;
+
+                    ctx.strokeStyle = "#ff7b72";
+                    ctx.fillStyle = "#ff7b72";
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                    ctx.lineTo(endX, endY);
+                    ctx.stroke();
+
+                    const head = 8;
+                    ctx.beginPath();
+                    ctx.moveTo(endX, endY);
+                    ctx.lineTo(endX - dir * head, endY - head * 0.7);
+                    ctx.lineTo(endX - dir * head, endY + head * 0.7);
+                    ctx.closePath();
+                    ctx.fill();
+
+                    ctx.fillStyle = "#ffd3cf";
+                    ctx.font = "13px Segoe UI";
+                    ctx.fillText(`F = ${controlForce.toFixed(2)}`, startX - 32, startY - 8);
+                }
+
+                if (bobTrace.length > 1) {
+                    ctx.strokeStyle = "#ff4d4d";
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    for (let i = 0; i < bobTrace.length; i++) {
+                        const p = bobTrace[i];
+                        const px = worldToScreenX(p.x);
+                        if (i === 0) {
+                            ctx.moveTo(px, p.y);
+                        } else {
+                            ctx.lineTo(px, p.y);
+                        }
+                    }
+                    ctx.stroke();
+                }
+
+                ctx.strokeStyle = "#9cb4cb";
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(pivotX, pivotY);
+                ctx.lineTo(bobX, bobY);
+                ctx.stroke();
+
+                ctx.fillStyle = "#9cb4cb";
+                ctx.beginPath();
+                ctx.arc(pivotX, pivotY, 8, 0, 2 * Math.PI);
+                ctx.fill();
+
+                ctx.fillStyle = "#ff4d4d";
+                ctx.beginPath();
+                ctx.arc(bobX, bobY, 13, 0, 2 * Math.PI);
+                ctx.fill();
+
+                ctx.fillStyle = "#ff4d4d";
+                ctx.font = "bold 18px Segoe UI";
+                const timerText = `${t.toFixed(2)}s`;
+                ctx.textAlign = "left";
+                ctx.fillText(timerText, binX + 5, 18);
+                ctx.textAlign = "left";
+            }
+
+            function animate() {
+                const now = performance.now();
+                if (lastFrameTime === null) {
+                    lastFrameTime = now;
+                }
+                const frameDt = Math.min(0.05, (now - lastFrameTime) / 1000);
+                lastFrameTime = now;
+                updateParticles(frameDt);
+
+                if (running) {
+                    for (let i = 0; i < 3; i++) {
+                        simulateStep();
+                    }
+                }
+                drawPendulum();
+                drawParticles();
+                requestAnimationFrame(animate);
+            }
+
+            Object.values(inputs).forEach((input) => {
+                input.addEventListener("input", () => {
+                    refreshValueLabels();
+                    drawPendulum();
+                });
+            });
+
+            runBtn.addEventListener("click", () => {
+                running = true;
+                runBtn.textContent = "Running";
+            });
+
+            pauseBtn.addEventListener("click", () => {
+                running = false;
+                runBtn.textContent = "Resume";
+            });
+
+            resetBtn.addEventListener("click", resetSimulation);
+
+            refreshValueLabels();
+            resetSimulation();
+            animate();
+        }
     </script>
 </body>
 </html>
